@@ -1,12 +1,8 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
-import IconButton from "./components/atoms/IconButton";
-import TextInputField from "./components/atoms/TextInputField";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
+import TextField from "./components/atoms/TextField";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -17,7 +13,11 @@ export default function App() {
   } else {
     return (
       <View style={createStyles().container}>
-        <TextInputField text="hoi" />
+        <TextField text="hoi" />
+        <TextInput
+          style={createStyles().input}
+          underlineColorAndroid="transparent"
+        />
       </View>
     );
   }
@@ -30,5 +30,16 @@ const createStyles = () =>
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "center",
+    },
+    input: {
+      width: "100%",
+      height: "10%",
+      marginTop: "10%",
+      marginBottom: "10%",
+      fontSize: 30,
+      fontWeight: "bold",
+      color: "#2427C8",
+      textAlign: "center",
+      backgroundColor: "#ECF9FC",
     },
   });
