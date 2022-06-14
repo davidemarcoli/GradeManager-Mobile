@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, TouchableOpacity, View, Text} from "react-native";
 import {IconSizeProps, MaterialIcon} from "./MaterialIcon";
+import TextField from "./TextField";
 
 type IconButtonProps = {
     onPress: () => void;
@@ -13,6 +14,8 @@ type IconButtonProps = {
     text?: {
         text: string,
         color?: string;
+        size?: number;
+        weight?: string;
     };
     backgroundColor?: string;
     borderRadius?: number;
@@ -32,7 +35,7 @@ export default function IconButton ({onPress, icon, text, backgroundColor="black
                 {icon && <View style={styleSheet.icon}>
                     <MaterialIcon size={icon.size} name={icon.name} color={icon.color}></MaterialIcon>
                 </View>}
-                {text && <Text style={styleSheet.text}>{text.text}</Text>}
+                {text && <TextField text={text.text} color={text.color} fontWeight={text.weight} textSize={text.size}></TextField>}
         </TouchableOpacity>
     );
 }
