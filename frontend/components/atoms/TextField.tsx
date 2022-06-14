@@ -41,14 +41,16 @@ export default function TextField({
       >
         {text}
       </Text>
-      <Text
-        style={
-          createStyles(opacity, textSize - 15, color, fontWeight, marginTop)
-            .secondaryText
+        {secondaryText &&
+            <Text
+                style={
+                    createStyles(opacity, textSize - 15, color, fontWeight, marginTop)
+                        .secondaryText
+                }
+            >
+                {secondaryText}
+            </Text>
         }
-      >
-        {secondaryText}
-      </Text>
     </>
   );
 }
