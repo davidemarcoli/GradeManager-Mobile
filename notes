@@ -1,0 +1,5 @@
+Backend:
+	JWT --> Request Filter
+
+Frontend:
+	Store JWT Token
