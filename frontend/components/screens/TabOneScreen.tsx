@@ -4,14 +4,20 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from '../EditScreenInfo';
 import { Text, View } from '../Themed';
 import { RootTabScreenProps } from '../../types';
+import IconButton from "../atoms/IconButton";
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
-    </View>
+      <>
+        <View style={styles.container}>
+          <Text style={styles.title}>Tab One</Text>
+          <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
+          <EditScreenInfo path="/screens/TabOneScreen.tsx"/>
+        </View>
+
+        <IconButton onPress={() => console.log("clicked")} text={"hallo"} color={"white"}></IconButton>
+
+      </>
   );
 }
 
