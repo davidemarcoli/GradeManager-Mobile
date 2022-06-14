@@ -1,11 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import useCachedResources from "./hooks/useCachedResources";
+import useColorScheme from "./hooks/useColorScheme";
 import IconButton from "./components/atoms/IconButton";
+import TextInputField from "./components/atoms/TextInputField";
+import { StyleSheet, View } from "react-native";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -15,7 +16,19 @@ export default function App() {
     return null;
   } else {
     return (
-        <IconButton onPress={() => console.log("clicked")} text={"hallo"} color={"white"}></IconButton>
+      <View style={createStyles().container}>
+        <TextInputField text="hoi" />
+      </View>
     );
   }
 }
+
+const createStyles = () =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  });
