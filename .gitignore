@@ -346,6 +346,9 @@ google-services.json
 ### yarn ###
 # https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 
+.yarn/
+yarn.lock
+
 .yarn/*
 !.yarn/releases
 !.yarn/patches

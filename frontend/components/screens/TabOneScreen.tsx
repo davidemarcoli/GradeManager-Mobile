@@ -15,7 +15,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           <EditScreenInfo path="/screens/TabOneScreen.tsx"/>
         </View>
 
-        <IconButton onPress={() => console.log("clicked")} text={"hallo"} color={"white"}></IconButton>
+        <IconButton onPress={() => console.log("clicked")} text={"hallo"} backgroundColor={"white"}></IconButton>
 
       </>
   );
