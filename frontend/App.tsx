@@ -12,18 +12,18 @@ export default function App() {
     const colorScheme = useColorScheme();
 
     const navbarElements: { iconName: string, text: string }[] = [
-        {iconName: "home", text: "Home1"},
-        {iconName: "home", text: "Home2"},
-        {iconName: "home", text: "Home3"},
-        {iconName: "home", text: "Home4"},
-        {iconName: "home", text: "Home5"},
+        {iconName: "calendar-month-outline", text: "Exams"},
+        {iconName: "flag-outline", text: "Goals"},
+        {iconName: "playlist-plus", text: "Grades"},
+        {iconName: "chart-bell-curve-cumulative", text: "Analytics"},
+        {iconName: "face-man-outline", text: "Profile"},
     ]
 
     if (!isLoadingComplete) {
         return null;
     } else {
         return (
-            <>
+            <View style={{backgroundColor: "#E5E5E5"}}>
                 <View style={{width: '100%', height: '80%', alignContent: "center", justifyContent: "center"}}>
                     <View style={{width: '50%', height: '15%', alignSelf: "center"}}>
                         <IconButton onPress={() => console.log("clicked")} backgroundColor={"#6C63FF"}
@@ -32,14 +32,12 @@ export default function App() {
                                     icon={{name: "google", size: "extraLarge", padding: 10, color: "white"}}
                                     sameRow={true}/>
                     </View>
-                    <NavbarButton onPress={() => console.log("NavBar Button Clicked")} iconName={"home"}
-                                  text={"Home"}></NavbarButton>
 
                 </View>
                 <View style={{width: '100%', height: '20%', alignContent: "center", justifyContent: "center"}}>
-                    <Navbar elements={navbarElements} activeColor={"orange"} inactiveColor={"black"} backgroundColor={"#d4d4d4"}></Navbar>
+                    <Navbar elements={navbarElements} activeColor={"#F46B45"} inactiveColor={"#99A0AC"} backgroundColor={"white"}></Navbar>
                 </View>
-            </>
+            </View>
         );
     }
 }
