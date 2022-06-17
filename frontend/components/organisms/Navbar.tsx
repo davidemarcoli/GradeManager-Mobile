@@ -29,7 +29,7 @@ export default function ({elements, activeColor, inactiveColor, backgroundColor 
         navbarButtons.push(<NavbarButton key={"NavbarButton" + i}
                                          onPress={() => updateActiveTab(i)}
                                          iconName={elements[i].iconName} text={elements[i].text}
-                                         backgroundColor={backgroundColor} color={inactiveColor}></NavbarButton>)
+                                         backgroundColor={backgroundColor} color={activeTab == i ? activeColor : inactiveColor}></NavbarButton>)
     }
 
     return (
