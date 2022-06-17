@@ -22,13 +22,14 @@ type IconButtonProps = {
     border?: {
         width: number;
         color: string;
-    }
+    },
+    sameRow?: boolean;
 };
 
 
-export default function IconButton ({onPress, icon, text, backgroundColor="black", borderRadius=0, border}: IconButtonProps) {
+export default function IconButton ({onPress, icon, text, backgroundColor="white", borderRadius=0, border, sameRow=false}: IconButtonProps) {
 
-    const styleSheet = styles({onPress, icon, text, backgroundColor: backgroundColor, borderRadius, border});
+    const styleSheet = styles({onPress, icon, text, backgroundColor: backgroundColor, borderRadius, border, sameRow});
 
     return (
         <TouchableOpacity style={[styleSheet.container, styleSheet.flex, {backgroundColor: backgroundColor, borderRadius: borderRadius}]} onPress={onPress}>
@@ -44,14 +45,11 @@ const styles = (props: IconButtonProps) => StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 0,
-        width: '100%',
-        height: '100%',
         borderColor: props.border ? props.border.color : 'black',
         borderWidth: props.border ? props.border.width : 0,
     },
     flex: {
-        flex: 1,
+        flex: props.sameRow ? 1 : 0,
         flexDirection: "row"
     },
     text: {
