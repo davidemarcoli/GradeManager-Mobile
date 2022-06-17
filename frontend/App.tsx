@@ -1,16 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
+import useCachedResources from "./hooks/useCachedResources";
+import useColorScheme from "./hooks/useColorScheme";
 import IconButton from "./components/atoms/IconButton";
-import {View} from "react-native";
+import { View } from "react-native";
+import TextField from "./components/atoms/TextField";
+import TextInputField from "./components/atoms/TextInputField";
 import NavbarButton from "./components/molecules/NavbarButton";
 import Navbar from "./components/organisms/Navbar";
 
 export default function App() {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
-
     const navbarElements: { iconName: string, text: string }[] = [
         {iconName: "calendar-month-outline", text: "Exams"},
         {iconName: "flag-outline", text: "Goals"},
@@ -37,6 +38,7 @@ export default function App() {
                 <View style={{width: '100%', height: '20%', alignContent: "center", justifyContent: "center"}}>
                     <Navbar elements={navbarElements} activeColor={"#F46B45"} inactiveColor={"#99A0AC"} backgroundColor={"white"}></Navbar>
                 </View>
+                <TextInputField />
             </View>
         );
     }
