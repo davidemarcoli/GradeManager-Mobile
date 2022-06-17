@@ -364,3 +364,5 @@ yarn.lock
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/yarn,reactnative,intellij+all
+
+package-lock.json
