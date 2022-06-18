@@ -12,8 +12,10 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import LoginScreen from "./components/screens/LoginScreen";
 import TabOneScreen from "./components/screens/TabOneScreen";
+import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
+import {MaterialIcon} from "./components/atoms/MaterialIcon";
 
-const Stack = createNativeStackNavigator();
+const Stack = createMaterialBottomTabNavigator();
 
 export default function App() {
     const isLoadingComplete = useCachedResources();
@@ -31,22 +33,21 @@ export default function App() {
     } else {
         return (
             <NavigationContainer>
-                <View style={{backgroundColor: "#E5E5E5"}}>
-
-
-                    <View style={{width: '100%', height: '100%'}}>
-                        <Stack.Navigator initialRouteName={"Login"} screenOptions={{
-                            headerShown: false,
-                        }}>
-                            <Stack.Screen name="Login" component={LoginScreen} />
-                            <Stack.Screen name="Test" component={TabOneScreen} />
-                        </Stack.Navigator>
-                    </View>
-
-                    
-                    <View style={{width: '100%', alignContent: "center", justifyContent: "center"}}>
-                        <Navbar elements={navbarElements} activeColor={"#F46B45"} inactiveColor={"#99A0AC"} backgroundColor={"white"}></Navbar>
-                    </View>
+                <View style={{width: '100%', height: '100%', backgroundColor: "#E5E5E5"}}>
+                    <Stack.Navigator initialRouteName={"Login"} activeColor={"#F46B45"} inactiveColor={"#99A0AC"} barStyle={{backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20}}>
+                        <Stack.Screen name="Login" component={LoginScreen} options={{
+                            tabBarLabel: "Login",
+                            tabBarIcon: ({color}) => (
+                                <MaterialIcon name={"calendar-month-outline"} color={color} size={"footer"}></MaterialIcon>
+                            )
+                        }} />
+                        <Stack.Screen name="Test" component={TabOneScreen} options={{
+                            tabBarLabel: "Test",
+                            tabBarIcon: ({color}) => (
+                                <MaterialIcon name={"face-man-outline"} color={color} size={"footer"}></MaterialIcon>
+                            )
+                        }} />
+                    </Stack.Navigator>
                 </View>
             </NavigationContainer>
         );

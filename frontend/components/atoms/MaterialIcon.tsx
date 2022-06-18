@@ -15,6 +15,7 @@ export const IconSizes = {
     small: 13,
     medium: 18,
     large: 23,
+    footer: 26,
     extraLarge: 27,
 };
 
