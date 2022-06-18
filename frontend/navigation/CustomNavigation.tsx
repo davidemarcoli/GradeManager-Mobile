@@ -1,14 +1,14 @@
 import LoginScreen from "../components/screens/LoginScreen";
 import TabOneScreen from "../components/screens/TabOneScreen";
-import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
-import {MaterialIcon} from "../components/atoms/MaterialIcon";
 import useCachedResources from "../hooks/useCachedResources";
 import {useColorScheme, View} from "react-native";
 import {NavigationContainer} from "@react-navigation/native";
 import React from "react";
-import createStackNavigator from "react-native-screens/createNativeStackNavigator";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Navbar from "../components/organisms/Navbar";
+import ExamsScreen from "../components/screens/ExamsScreen";
+import GoalsScreen from "../components/screens/GoalsScreen";
+import GradesScreen from "../components/screens/GradesScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,10 +16,10 @@ export default function CustomNavigation() {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
     const navbarElements: { iconName: string, text: string, route: string }[] = [
-        {iconName: "calendar-month-outline", text: "Exams", route: "Login"},
+        {iconName: "calendar-month-outline", text: "Exams", route: "Exams"},
         {iconName: "flag-outline", text: "Goals", route: "Goals"},
         {iconName: "playlist-plus", text: "Grades", route: "Grades"},
-        {iconName: "chart-bell-curve-cumulative", text: "Analytics", route: "Analytics"},
+        {iconName: "chart-bell-curve-cumulative", text: "Analytics", route: "Login"},
         {iconName: "face-man-outline", text: "Profile", route: "Test"},
     ]
 
@@ -34,6 +34,9 @@ export default function CustomNavigation() {
                             headerShown: false,
                         }}>
                             <Stack.Screen name="Login" component={LoginScreen} />
+                            <Stack.Screen name="Exams" component={ExamsScreen} />
+                            <Stack.Screen name="Goals" component={GoalsScreen} />
+                            <Stack.Screen name="Grades" component={GradesScreen} />
                             <Stack.Screen name="Test" component={TabOneScreen} />
                         </Stack.Navigator>
                     </View>
