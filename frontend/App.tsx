@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import MaterialBottomTabNavigation from "./navigation/MaterialBottomTabNavigation";
 import CustomNavigation from "./navigation/CustomNavigation";
@@ -14,6 +14,7 @@ import {
 } from 'react-native-paper';
 import merge from 'deepmerge';
 import { PreferencesContext } from "./theme/PreferencesContext";
+import {getTheme, storeTheme} from "./services/ThemeStorageService";
 
 const navigationNumber = 2;
 
@@ -41,10 +42,22 @@ export default function App() {
 
     const [isThemeDark, setIsThemeDark] = React.useState(false);
 
+    useEffect(() => {
+        getTheme().then(theme => {
+            if (theme) {
+                setIsThemeDark(theme);
+            }
+        });
+    }, []);
+
+
     let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
 
     const toggleTheme = React.useCallback(() => {
-        return setIsThemeDark(!isThemeDark);
+        storeTheme(!isThemeDark).then(r => {
+            console.log("Theme saved.");
+            return setIsThemeDark(!isThemeDark);
+        });
     }, [isThemeDark]);
 
 
@@ -64,7 +77,9 @@ export default function App() {
         navigation = <CustomNavigation theme={theme}/>;
     }
 
+/*
     console.log(theme);
+*/
 
     return (
         <>
