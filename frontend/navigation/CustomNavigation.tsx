@@ -9,10 +9,15 @@ import Navbar from "../components/organisms/Navbar";
 import ExamsScreen from "../components/screens/ExamsScreen";
 import GoalsScreen from "../components/screens/GoalsScreen";
 import GradesScreen from "../components/screens/GradesScreen";
+import SettingsScreen from "../components/screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function CustomNavigation() {
+type ThemeProps = {
+    theme: any
+}
+
+export default function CustomNavigation({theme}: ThemeProps) {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
     const navbarElements: { iconName: string, text: string, route: string }[] = [
@@ -20,15 +25,15 @@ export default function CustomNavigation() {
         {iconName: "flag-outline", text: "Goals", route: "Goals"},
         {iconName: "playlist-plus", text: "Grades", route: "Grades"},
         {iconName: "chart-bell-curve-cumulative", text: "Analytics", route: "Login"},
-        {iconName: "face-man-outline", text: "Profile", route: "Test"},
+        {iconName: "face-man-outline", text: "Profile", route: "Settings"},
     ]
 
     if (!isLoadingComplete) {
         return null;
     } else {
         return (
-            <NavigationContainer>
-                <View style={{backgroundColor: "#E5E5E5"}}>
+            <NavigationContainer theme={theme}>
+                <View style={{backgroundColor: theme.colors.backgroundColor}}>
                     <View style={{width: '100%', height: '100%'}}>
                         <Stack.Navigator initialRouteName={"Login"} screenOptions={{
                             headerShown: false,
@@ -37,10 +42,10 @@ export default function CustomNavigation() {
                             <Stack.Screen name="Exams" component={ExamsScreen} />
                             <Stack.Screen name="Goals" component={GoalsScreen} />
                             <Stack.Screen name="Grades" component={GradesScreen} />
-                            <Stack.Screen name="Test" component={TabOneScreen} />
+                            <Stack.Screen name="Settings" component={SettingsScreen} />
                         </Stack.Navigator>
                     </View>
-                    <Navbar elements={navbarElements} activeColor={"#F46B45"} inactiveColor={"#99A0AC"} backgroundColor={"white"}></Navbar>
+                    <Navbar elements={navbarElements} activeColor={theme.colors.accent} inactiveColor={"#99A0AC"} backgroundColor={theme.colors.navbarBackground}></Navbar>
                 </View>
             </NavigationContainer>
         );

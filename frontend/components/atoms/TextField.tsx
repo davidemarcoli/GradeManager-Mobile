@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import {Text, useTheme} from "react-native-paper"
 
 type TextFieldProps = {
   text: string;
@@ -25,17 +26,20 @@ type TextFieldProps = {
 export default function TextField({
   text,
   secondaryText,
-  color = "black",
+  color,
   opacity = 1,
   textSize = 16,
   fontWeight = "normal",
   marginTop = "0%",
 }: TextFieldProps) {
+
+    const theme = useTheme();
+
   return (
     <>
       <Text
         style={
-          createStyles(opacity, textSize, color, fontWeight, marginTop)
+          createStyles(opacity, textSize, color || theme.colors.text, fontWeight, marginTop)
             .primaryText
         }
       >
@@ -44,7 +48,7 @@ export default function TextField({
         {secondaryText &&
             <Text
                 style={
-                    createStyles(opacity, textSize - 15, color, fontWeight, marginTop)
+                    createStyles(opacity, textSize - 15, color || theme.colors.text, fontWeight, marginTop)
                         .secondaryText
                 }
             >

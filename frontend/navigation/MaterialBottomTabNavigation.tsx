@@ -9,7 +9,12 @@ import React from "react";
 
 const Stack = createMaterialBottomTabNavigator();
 
-export default function MaterialBottomTabNavigation() {
+type ThemeProps = {
+    theme: any
+}
+
+export default function MaterialBottomTabNavigation({theme}: ThemeProps) {
+
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
     const navbarElements: { iconName: string, text: string, route: string }[] = [
@@ -24,7 +29,7 @@ export default function MaterialBottomTabNavigation() {
         return null;
     } else {
         return (
-            <NavigationContainer>
+            <NavigationContainer theme={theme}>
                 <View style={{width: '100%', height: '100%', backgroundColor: "#E5E5E5"}}>
                     <Stack.Navigator initialRouteName={"Login"} activeColor={"#F46B45"} inactiveColor={"#99A0AC"} barStyle={{backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20}}>
                         <Stack.Screen name="Login" component={LoginScreen} options={{
