@@ -28,6 +28,8 @@ export default function App() {
             background: '#121212',
             navbarBackground: '#232323',
             accent: '#F46B45',
+            // accent: '#4f8a36',
+            secondaryAccent: '#6C63FF',
         }
     });
 
@@ -36,6 +38,8 @@ export default function App() {
             background: '#E5E5E5',
             navbarBackground: '#FFFFFF',
             accent: '#F46B45',
+            // accent: '#4f8a36',
+            secondaryAccent: '#6C63FF',
         }
     });
 

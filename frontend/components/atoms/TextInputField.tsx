@@ -1,77 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
-import { IconSizeProps, MaterialIcon } from "./MaterialIcon";
-import { FloatingLabelInput } from "react-native-floating-label-input";
+import React, {useState, useEffect} from "react";
+import {View, Text, StyleSheet} from "react-native";
+import {TextInput, useTheme} from 'react-native-paper';
+import {theme} from "../../App";
 
 type TextInputFieldProps = {
-  value?: string;
-  placeholder?: string;
-  secureTextEntry?: boolean;
-  textSize?: number;
-  textColor?: string;
-  fontWeight?: string;
-  bottomBorderColor?: string;
-  borderRadius?: number;
-  backgroundColor?: string;
-  marginTop?: number;
-  onChangeText?: (text: string) => void;
-  icon?: {
-    name: string;
-    size: IconSizeProps["iconSizes"];
-    color?: string;
-    padding?: number;
-  };
+    label: string;
+    defaultValue?: string;
+    placeholder?: string;
+    secureTextEntry?: boolean;
+    marginTop?: number;
+    onChangeText?: (text: string) => void;
 };
 
 export default function TextInputField({
-  value,
-  placeholder,
-  textSize,
-  textColor,
-  fontWeight,
-  bottomBorderColor,
-  borderRadius,
-  backgroundColor,
-  marginTop,
-}: TextInputFieldProps) {
-  const [cont, setCont] = useState("");
-  const [show, setShow] = useState(false);
+                                           label,
+                                           defaultValue = "",
+                                           placeholder = "",
+                                           secureTextEntry = false,
+                                           marginTop = 0,
+                                           onChangeText = () => {
+                                           },
+                                       }: TextInputFieldProps) {
 
-  return (
-    <FloatingLabelInput
-      label={"label"}
-      isPassword
-      togglePassword={show}
-      value={cont}
-      onChangeText={(value) => setCont(value)}
-      customShowPasswordComponent={<Text>Show</Text>}
-      customHidePasswordComponent={<Text>Hide</Text>}
-    />
-  );
+    const theme = useTheme();
+
+    return (
+        <TextInput style={createStyles(marginTop).textInput} label={label} value={defaultValue} onChangeText={onChangeText} placeholder={placeholder}
+                   secureTextEntry={secureTextEntry} selectionColor={theme.colors.accent}
+                   underlineColor={theme.colors.accent} activeOutlineColor={theme.colors.accent}
+                   activeUnderlineColor={theme.colors.accent}></TextInput>
+    );
 }
 
 const createStyles = (
-  textSize?: number,
-  textColor?: string,
-  fontWeight?: string,
-  bottomBorderColor?: string,
-  borderRadius?: number,
-  backgroundColor?: string,
-  marginTop?: number
+    marginTop?: number
 ) =>
-  StyleSheet.create({
-    textInput: {
-      position: "relative",
-      top: 0,
-      marginTop: marginTop,
-      fontSize: textSize,
-      alignSelf: "center",
-      fontWeight: fontWeight,
-    },
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-  });
+    StyleSheet.create({
+        textInput: {
+            marginTop: marginTop,
+        },
+    });
