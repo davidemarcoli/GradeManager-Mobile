@@ -5,6 +5,7 @@ import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
 import { Text, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import PasswordInputField from "../molecules/PasswordInputField";
 
 export default function LoginScreen() {
   const [data, setData] = React.useState({
@@ -62,6 +63,7 @@ export default function LoginScreen() {
           })
         }
         marginTop={20}
+        icon={{}}
       ></TextInputField>
 
       <IconButton
