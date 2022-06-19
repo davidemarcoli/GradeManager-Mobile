@@ -1,7 +1,6 @@
 import React from "react";
 import {FlexAlignType, StyleSheet} from "react-native";
 import {Text, useTheme} from "react-native-paper"
-import {theme} from "../../App";
 
 type TextFieldProps = {
     text: string;

@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {View, Text, StyleSheet} from "react-native";
 import {TextInput, useTheme} from 'react-native-paper';
-import {theme} from "../../App";
 
 type TextInputFieldProps = {
     label: string;

@@ -5,7 +5,6 @@ import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
 import {Text, useTheme} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
-import {theme} from "../../App";
 
 export default function LoginScreen() {
 
@@ -15,6 +14,10 @@ export default function LoginScreen() {
     });
 
     function login() {
+        console.log(data);
+    }
+
+    function loginWithGoogle() {
         console.log(data);
     }
 
@@ -40,7 +43,7 @@ export default function LoginScreen() {
 
             <TextField text={"Or, login with..."} textSize={12} marginTop={30}></TextField>
 
-            <IconButton border={{width: 1}} marginTop={30} height={50} borderRadius={5} onPress={() => {login()}} icon={{name: "google", size: "extraLarge", color: theme.colors.text}} backgroundColor={theme.colors.navbarBackground}></IconButton>
+            <IconButton border={{width: 1}} marginTop={30} height={50} borderRadius={5} onPress={() => {loginWithGoogle()}} icon={{name: "google", size: "extraLarge", color: theme.colors.text}} backgroundColor={theme.colors.navbarBackground}></IconButton>
 
             <View style={{flexDirection: "row", marginTop: 25, justifyContent: "center"}}>
                 <TextField text={"Need a new account? "} textSize={12}></TextField>
