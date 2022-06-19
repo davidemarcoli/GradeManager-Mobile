@@ -1,7 +1,5 @@
 import React from 'react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-MIcon.loadFont();
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export type IconSizeProps = {
     iconSizes: keyof typeof IconSizes;
@@ -17,9 +15,10 @@ export const IconSizes = {
     small: 13,
     medium: 18,
     large: 23,
+    footer: 26,
     extraLarge: 27,
 };
 
 export const MaterialIcon = ({size="medium", name, color="black"}: IconProps) => (
-    <MIcon name={name} size={IconSizes[size]} color={color} />
+    <MaterialCommunityIcons name={name} size={IconSizes[size]} color={color} />
 );

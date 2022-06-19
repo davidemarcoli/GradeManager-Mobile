@@ -24,15 +24,26 @@ type IconButtonProps = {
         color: string;
     },
     sameRow?: boolean;
+    height?: number;
+    marginTop?: number;
 };
 
 
-export default function IconButton ({onPress, icon, text, backgroundColor="white", borderRadius=0, border, sameRow=false}: IconButtonProps) {
+export default function IconButton ({onPress, icon, text, backgroundColor="white", borderRadius=0, border, sameRow=false, height, marginTop}: IconButtonProps) {
 
     const styleSheet = styles({onPress, icon, text, backgroundColor: backgroundColor, borderRadius, border, sameRow});
 
+    let additionalStyles = {};
+
+    if (height) {
+        additionalStyles = {...additionalStyles, height};
+    }
+    if (marginTop) {
+        additionalStyles = {...additionalStyles, marginTop};
+    }
+
     return (
-        <TouchableOpacity style={[styleSheet.container, styleSheet.flex, {backgroundColor: backgroundColor, borderRadius: borderRadius}]} onPress={onPress}>
+        <TouchableOpacity style={[styleSheet.container, styleSheet.flex, {backgroundColor: backgroundColor, borderRadius: borderRadius, ...additionalStyles}]} onPress={onPress}>
                 {icon && <View style={styleSheet.icon}>
                     <MaterialIcon size={icon.size} name={icon.name} color={icon.color}></MaterialIcon>
                 </View>}

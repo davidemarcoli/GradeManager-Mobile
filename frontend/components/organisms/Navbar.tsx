@@ -1,20 +1,30 @@
 import {StyleSheet, View} from "react-native";
 import NavbarButton from "../molecules/NavbarButton";
-import React from "react";
+import React, {useEffect} from "react";
+import {NavigationActions} from "react-navigation";
+import {useNavigation} from "@react-navigation/native";
 
 type NavbarProps = {
     elements: {
         iconName: string,
         text: string,
+        route: string
     }[],
     activeColor: string,
     inactiveColor: string,
     backgroundColor?: string,
 }
 
-export default function ({elements, activeColor, inactiveColor, backgroundColor = "white"}: NavbarProps) {
 
+export default function Navbar({elements, activeColor, inactiveColor, backgroundColor = "white"}: NavbarProps) {
+
+    const navigation = useNavigation();
     const [activeTab, setActiveTab] = React.useState(0);
+
+    useEffect(() => {
+        console.log("Route has changed to " + elements[activeTab].route)
+        navigation.navigate(elements[activeTab].route);
+    }, [activeTab])
 
     let updateActiveTab = (index: number) => {
         console.log("NavBar Button " + index + " Clicked")
