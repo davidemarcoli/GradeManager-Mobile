@@ -3,11 +3,12 @@ import TextField from "../atoms/TextField";
 import {StyleSheet, View} from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
-import {Snackbar, Text, useTheme} from "react-native-paper";
+import {Text, useTheme} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
 import * as yup from "yup";
+import CustomSnackbar from "../atoms/CustomSnackbar";
 
-let schema = yup.object().shape({
+const schema = yup.object().shape({
     email: yup.string().required().email(),
     password: yup.string().required().min(8),
     fullname: yup.string(),
@@ -15,9 +16,10 @@ let schema = yup.object().shape({
 
 export default function RegisterScreen() {
 
-    const [visible, setVisible] = React.useState(false);
-    const onToggleSnackBar = () => setVisible(!visible);
-    const onDismissSnackBar = () => setVisible(false);
+    const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
+    const [error, setError] = React.useState(undefined);
+    const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
+    const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
     const [data, setData] = React.useState({
         email: "",
@@ -25,18 +27,22 @@ export default function RegisterScreen() {
         fullname: "",
     });
 
-    function login() {
+    function register() {
         console.log(data);
 
         schema.validate(data).then(() => {
             console.log("Input valid");
+            navigation.navigate("Exams");
+
         })
             .catch((error: any) => {
                 console.log(error.errors)
+                setError(error.errors[0]);
+                onToggleSnackBar();
             })
     }
 
-    function loginWithGoogle() {
+    function registerWithGoogle() {
         console.log(data);
     }
 
@@ -65,7 +71,7 @@ export default function RegisterScreen() {
                 height={50}
                 borderRadius={5}
                 onPress={() => {
-                    loginWithGoogle();
+                    registerWithGoogle();
                 }}
                 icon={{name: "google", size: "extraLarge", color: theme.colors.text}}
                 backgroundColor={theme.colors.navbarBackground}
@@ -120,7 +126,7 @@ export default function RegisterScreen() {
                 height={50}
                 borderRadius={5}
                 onPress={() => {
-                    login();
+                    register();
                 }}
                 text={{text: "Register", weight: "bold"}}
                 backgroundColor={theme.colors.accent}
@@ -143,17 +149,7 @@ export default function RegisterScreen() {
                     Login
                 </Text>
             </View>
-            <Snackbar
-                visible={visible}
-                onDismiss={onDismissSnackBar}
-                action={{
-                    label: 'Dismiss',
-                    onPress: () => {
-                        // Do something
-                    },
-                }}>
-                Hey there! I'm a Snackbar.
-            </Snackbar>
+            <CustomSnackbar visible={isSnackbarVisible} message={error} onDismiss={onDismissSnackBar}  />
         </View>
     );
 }

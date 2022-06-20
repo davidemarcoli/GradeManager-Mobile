@@ -39,7 +39,7 @@ export default function CustomNavigation({ theme }: ThemeProps) {
     return (
       <NavigationContainer theme={theme}>
         <View style={{ backgroundColor: theme.colors.backgroundColor }}>
-          <View style={{ width: "100%", height: "100%" }}>
+          <View style={{ width: "100%", height: "95%", zIndex: -2 }}>
             <Stack.Navigator
               initialRouteName={"Login"}
               screenOptions={{
@@ -54,12 +54,14 @@ export default function CustomNavigation({ theme }: ThemeProps) {
               <Stack.Screen name="Settings" component={SettingsScreen} />
             </Stack.Navigator>
           </View>
-          <Navbar
-            elements={navbarElements}
-            activeColor={theme.colors.accent}
-            inactiveColor={"#99A0AC"}
-            backgroundColor={theme.colors.navbarBackground}
-          ></Navbar>
+          <View style={{ width: "100%", height: "5%", zIndex: -1 }}>
+            <Navbar
+              elements={navbarElements}
+              activeColor={theme.colors.accent}
+              inactiveColor={"#99A0AC"}
+              backgroundColor={theme.colors.navbarBackground}
+            ></Navbar>
+          </View>
         </View>
       </NavigationContainer>
     );

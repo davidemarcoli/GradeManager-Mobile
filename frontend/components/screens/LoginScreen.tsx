@@ -1,123 +1,147 @@
 import React from "react";
 import TextField from "../atoms/TextField";
-import { StyleSheet, View } from "react-native";
+import {StyleSheet, View} from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
-import { Text, useTheme } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import PasswordInputField from "../molecules/PasswordInputField";
+import {Text, useTheme} from "react-native-paper";
+import {useNavigation} from "@react-navigation/native";
+import * as yup from "yup";
+import CustomSnackbar from "../atoms/CustomSnackbar";
+
+const schema = yup.object().shape({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(8),
+});
+
 
 export default function LoginScreen() {
-  const [data, setData] = React.useState({
-    username: "",
-    password: "",
-  });
+    const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
+    const [error, setError] = React.useState(undefined);
+    const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
+    const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
-  function login() {
-    console.log(data);
-  }
+    const [data, setData] = React.useState({
+        email: "",
+        password: "",
+    });
 
-  function loginWithGoogle() {
-    console.log(data);
-  }
+    function login() {
+        console.log(data);
 
-  const theme = useTheme();
-  const navigation = useNavigation();
+        schema.validate(data).then(() => {
+            console.log("Input valid");
+            navigation.navigate("Exams");
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        marginLeft: 40,
-        marginRight: 40,
-      }}
-    >
-      <TextField
-        text={"Login"}
-        textSize={30}
-        fontWeight={"bold"}
-        alignments={"flex-start"}
-      ></TextField>
+        })
+            .catch((error: any) => {
+                console.log(error.errors)
+                setError(error.errors[0]);
+                onToggleSnackBar();
+            })
+    }
 
-      <TextInputField
-        label={"Email"}
-        defaultValue={data.username}
-        onChangeText={(value: string) =>
-          setData({
-            ...data,
-            username: value,
-          })
-        }
-        marginTop={20}
-      ></TextInputField>
+    function loginWithGoogle() {
+        console.log(data);
+    }
 
-      <TextInputField
-        label={"Password"}
-        secureTextEntry={true}
-        defaultValue={data.password}
-        onChangeText={(value: string) =>
-          setData({
-            ...data,
-            password: value,
-          })
-        }
-        marginTop={20}
-        icon={{}}
-      ></TextInputField>
+    const theme = useTheme();
+    const navigation = useNavigation();
 
-      <IconButton
-        marginTop={30}
-        height={50}
-        borderRadius={5}
-        onPress={() => {
-          login();
-        }}
-        text={{ text: "Login", weight: "bold" }}
-        backgroundColor={theme.colors.accent}
-      ></IconButton>
-
-      <TextField
-        text={"Or, login with..."}
-        textSize={12}
-        marginTop={30}
-      ></TextField>
-
-      <IconButton
-        border={{ width: 1 }}
-        marginTop={30}
-        height={50}
-        borderRadius={5}
-        onPress={() => {
-          loginWithGoogle();
-        }}
-        icon={{ name: "google", size: "extraLarge", color: theme.colors.text }}
-        backgroundColor={theme.colors.navbarBackground}
-      ></IconButton>
-
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 25,
-          justifyContent: "center",
-        }}
-      >
-        <TextField text={"Need a new account? "} textSize={12}></TextField>
-        <Text
-          onPress={() => {
-            navigation.navigate("Register");
-          }}
-          style={{ color: "#6C63FF" }}
+    return (
+        <View
+            style={{
+                flex: 1,
+                justifyContent: "center",
+                marginLeft: 40,
+                marginRight: 40,
+            }}
         >
-          Register
-        </Text>
-      </View>
-    </View>
-  );
+            <TextField
+                text={"Login"}
+                textSize={30}
+                fontWeight={"bold"}
+                alignments={"flex-start"}
+            ></TextField>
+
+            <TextInputField
+                label={"Email"}
+                defaultValue={data.username}
+                onChangeText={(value: string) =>
+                    setData({
+                        ...data,
+                        username: value,
+                    })
+                }
+                marginTop={20}
+            ></TextInputField>
+
+            <TextInputField
+                label={"Password"}
+                secureTextEntry={true}
+                defaultValue={data.password}
+                onChangeText={(value: string) =>
+                    setData({
+                        ...data,
+                        password: value,
+                    })
+                }
+                marginTop={20}
+                icon={{}}
+            ></TextInputField>
+
+            <IconButton
+                marginTop={30}
+                height={50}
+                borderRadius={5}
+                onPress={() => {
+                    login();
+                }}
+                text={{text: "Login", weight: "bold"}}
+                backgroundColor={theme.colors.accent}
+            ></IconButton>
+
+            <TextField
+                text={"Or, login with..."}
+                textSize={12}
+                marginTop={30}
+            ></TextField>
+
+            <IconButton
+                border={{width: 1}}
+                marginTop={30}
+                height={50}
+                borderRadius={5}
+                onPress={() => {
+                    loginWithGoogle();
+                }}
+                icon={{name: "google", size: "extraLarge", color: theme.colors.text}}
+                backgroundColor={theme.colors.navbarBackground}
+            ></IconButton>
+
+            <View
+                style={{
+                    flexDirection: "row",
+                    marginTop: 25,
+                    justifyContent: "center",
+                }}
+            >
+                <TextField text={"Need a new account? "} textSize={12}></TextField>
+                <Text
+                    onPress={() => {
+                        navigation.navigate("Register");
+                    }}
+                    style={{color: "#6C63FF"}}
+                >
+                    Register
+                </Text>
+            </View>
+            <CustomSnackbar visible={isSnackbarVisible} message={error} onDismiss={onDismissSnackBar}/>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  space: {
-    marginBottom: 10,
-  },
+    space: {
+        marginBottom: 10,
+    },
 });
