@@ -97,6 +97,6 @@ const createStyles = (marginTop?: number, width?: string, padding?: number) =>
     },
     icon: {
       marginTop: "15%",
-      right: "25%",
+      right: "40%",
     },
   });
