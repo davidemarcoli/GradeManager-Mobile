@@ -17,8 +17,8 @@ export default function NavbarButton({onPress, iconName, color = "black", backgr
 
     return (
         <TouchableOpacity onPress={onPress} style={[stylesSheet.row]}>
-            <IconButton onPress={onPress} icon={{name: iconName, size: "extraLarge", color: color}} backgroundColor={backgroundColor}></IconButton>
-            <TextField text={text} fontWeight={"bold"} marginTop={"0%"} color={color}></TextField>
+            <IconButton onPress={onPress} icon={{name: iconName, size: "large", color: color}} backgroundColor={backgroundColor}></IconButton>
+            <TextField text={text} fontWeight={"bold"} textSize={13} marginTop={"0%"} color={color}></TextField>
         </TouchableOpacity>
     )
 }
