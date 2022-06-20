@@ -44,7 +44,7 @@ export default function TextInputField({
   return (
     <>
       {icon && (
-        <View>
+        <View style={createStyles(marginTop, width, padding).field}>
           <TextInput
             style={createStyles(marginTop, width, padding).textInput}
             label={label}
@@ -57,8 +57,11 @@ export default function TextInputField({
             activeOutlineColor={theme.colors.accent}
             activeUnderlineColor={theme.colors.accent}
           ></TextInput>
-          <Pressable onPress={handlePasswordVisibility}>
-            <MaterialCommunityIcons name={rightIcon} size={22} />
+          <Pressable
+            onPress={handlePasswordVisibility}
+            style={createStyles(marginTop, width, padding).icon}
+          >
+            <MaterialCommunityIcons name={rightIcon} size={22} color={"grey"} />
           </Pressable>
         </View>
       )}
@@ -84,9 +87,16 @@ export default function TextInputField({
 
 const createStyles = (marginTop?: number, width?: string, padding?: number) =>
   StyleSheet.create({
+    field: {
+      flexDirection: "row",
+    },
     textInput: {
       marginTop: marginTop,
       width: width,
       padding: padding,
+    },
+    icon: {
+      marginTop: "15%",
+      right: "25%",
     },
   });
