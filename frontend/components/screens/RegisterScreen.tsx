@@ -1,136 +1,165 @@
 import React from "react";
 import TextField from "../atoms/TextField";
-import { StyleSheet, View } from "react-native";
+import {StyleSheet, View} from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
-import { Text, useTheme } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import PasswordInputField from "../molecules/PasswordInputField";
+import {Snackbar, Text, useTheme} from "react-native-paper";
+import {useNavigation} from "@react-navigation/native";
+import * as yup from "yup";
+
+let schema = yup.object().shape({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(8),
+    fullname: yup.string(),
+});
 
 export default function RegisterScreen() {
-  const [data, setData] = React.useState({
-    username: "",
-    password: "",
-    fullname: "",
-  });
 
-  function login() {
-    console.log(data);
-  }
+    const [visible, setVisible] = React.useState(false);
+    const onToggleSnackBar = () => setVisible(!visible);
+    const onDismissSnackBar = () => setVisible(false);
 
-  function loginWithGoogle() {
-    console.log(data);
-  }
+    const [data, setData] = React.useState({
+        email: "",
+        password: "",
+        fullname: "",
+    });
 
-  const theme = useTheme();
-  const navigation = useNavigation();
+    function login() {
+        console.log(data);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        marginLeft: 40,
-        marginRight: 40,
-      }}
-    >
-      <TextField
-        text={"Register"}
-        textSize={30}
-        fontWeight={"bold"}
-        alignments={"flex-start"}
-      ></TextField>
+        schema.validate(data).then(() => {
+            console.log("Input valid");
+        })
+            .catch((error: any) => {
+                console.log(error.errors)
+            })
+    }
 
-      <IconButton
-        border={{ width: 1 }}
-        marginTop={30}
-        height={50}
-        borderRadius={5}
-        onPress={() => {
-          loginWithGoogle();
-        }}
-        icon={{ name: "google", size: "extraLarge", color: theme.colors.text }}
-        backgroundColor={theme.colors.navbarBackground}
-      ></IconButton>
+    function loginWithGoogle() {
+        console.log(data);
+    }
 
-      <TextField
-        text={"Or, register with email.."}
-        textSize={12}
-        marginTop={30}
-      ></TextField>
+    const theme = useTheme();
+    const navigation = useNavigation();
 
-      <TextInputField
-        label={"Email"}
-        defaultValue={data.username}
-        onChangeText={(value: string) =>
-          setData({
-            ...data,
-            username: value,
-          })
-        }
-        marginTop={20}
-      ></TextInputField>
-
-      <TextInputField
-        label={"Password"}
-        secureTextEntry={true}
-        defaultValue={data.password}
-        onChangeText={(value: string) =>
-          setData({
-            ...data,
-            password: value,
-          })
-        }
-        marginTop={20}
-        icon={{}}
-      ></TextInputField>
-
-      <TextInputField
-        label={"Full name"}
-        defaultValue={data.fullname}
-        onChangeText={(value: string) =>
-          setData({
-            ...data,
-            fullname: value,
-          })
-        }
-        marginTop={20}
-      ></TextInputField>
-
-      <IconButton
-        marginTop={30}
-        height={50}
-        borderRadius={5}
-        onPress={() => {
-          login();
-        }}
-        text={{ text: "Register", weight: "bold" }}
-        backgroundColor={theme.colors.accent}
-      ></IconButton>
-
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 25,
-          justifyContent: "center",
-        }}
-      >
-        <TextField text={"Already have an account? "} textSize={12}></TextField>
-        <Text
-          onPress={() => {
-            navigation.navigate("Login");
-          }}
-          style={{ color: "#6C63FF" }}
+    return (
+        <View
+            style={{
+                flex: 1,
+                justifyContent: "center",
+                marginLeft: 40,
+                marginRight: 40,
+            }}
         >
-          Login
-        </Text>
-      </View>
-    </View>
-  );
+            <TextField
+                text={"Register"}
+                textSize={30}
+                fontWeight={"bold"}
+                alignments={"flex-start"}
+            ></TextField>
+
+            <IconButton
+                border={{width: 1}}
+                marginTop={30}
+                height={50}
+                borderRadius={5}
+                onPress={() => {
+                    loginWithGoogle();
+                }}
+                icon={{name: "google", size: "extraLarge", color: theme.colors.text}}
+                backgroundColor={theme.colors.navbarBackground}
+            ></IconButton>
+
+            <TextField
+                text={"Or, register with email.."}
+                textSize={12}
+                marginTop={30}
+            ></TextField>
+
+            <TextInputField
+                label={"Email"}
+                defaultValue={data.email}
+                onChangeText={(value: string) =>
+                    setData({
+                        ...data,
+                        email: value,
+                    })
+                }
+                marginTop={20}
+            ></TextInputField>
+
+            <TextInputField
+                label={"Password"}
+                secureTextEntry={true}
+                defaultValue={data.password}
+                onChangeText={(value: string) =>
+                    setData({
+                        ...data,
+                        password: value,
+                    })
+                }
+                marginTop={20}
+                icon={{}}
+            ></TextInputField>
+
+            <TextInputField
+                label={"Full name"}
+                defaultValue={data.fullname}
+                onChangeText={(value: string) =>
+                    setData({
+                        ...data,
+                        fullname: value,
+                    })
+                }
+                marginTop={20}
+            ></TextInputField>
+
+            <IconButton
+                marginTop={30}
+                height={50}
+                borderRadius={5}
+                onPress={() => {
+                    login();
+                }}
+                text={{text: "Register", weight: "bold"}}
+                backgroundColor={theme.colors.accent}
+            ></IconButton>
+
+            <View
+                style={{
+                    flexDirection: "row",
+                    marginTop: 25,
+                    justifyContent: "center",
+                }}
+            >
+                <TextField text={"Already have an account? "} textSize={12}></TextField>
+                <Text
+                    onPress={() => {
+                        navigation.navigate("Login");
+                    }}
+                    style={{color: "#6C63FF"}}
+                >
+                    Login
+                </Text>
+            </View>
+            <Snackbar
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                    label: 'Dismiss',
+                    onPress: () => {
+                        // Do something
+                    },
+                }}>
+                Hey there! I'm a Snackbar.
+            </Snackbar>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  space: {
-    marginBottom: 10,
-  },
+    space: {
+        marginBottom: 10,
+    },
 });
