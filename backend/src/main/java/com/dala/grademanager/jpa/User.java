@@ -4,21 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import java.util.UUID;
 
+@Entity(name = "users")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Id
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     private String name;
     private String email;

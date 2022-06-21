@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, TouchableOpacity, View, Text} from "react-native";
+import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {IconSizeProps, MaterialIcon} from "./MaterialIcon";
 import TextField from "./TextField";
 
@@ -29,7 +29,17 @@ type IconButtonProps = {
 };
 
 
-export default function IconButton ({onPress, icon, text, backgroundColor="white", borderRadius=0, border, sameRow=false, height, marginTop}: IconButtonProps) {
+export default function IconButton({
+                                       onPress,
+                                       icon,
+                                       text,
+                                       backgroundColor = "white",
+                                       borderRadius = 0,
+                                       border,
+                                       sameRow = false,
+                                       height,
+                                       marginTop
+                                   }: IconButtonProps) {
 
     const styleSheet = styles({onPress, icon, text, backgroundColor: backgroundColor, borderRadius, border, sameRow});
 
@@ -43,11 +53,15 @@ export default function IconButton ({onPress, icon, text, backgroundColor="white
     }
 
     return (
-        <TouchableOpacity style={[styleSheet.container, styleSheet.flex, {backgroundColor: backgroundColor, borderRadius: borderRadius, ...additionalStyles}]} onPress={onPress}>
-                {icon && <View style={styleSheet.icon}>
-                    <MaterialIcon size={icon.size} name={icon.name} color={icon.color}></MaterialIcon>
-                </View>}
-                {text && <TextField text={text.text} color={text.color} fontWeight={text.weight} textSize={text.size}></TextField>}
+        <TouchableOpacity style={[styleSheet.container, styleSheet.flex, {
+            backgroundColor: backgroundColor,
+            borderRadius: borderRadius, ...additionalStyles
+        }]} onPress={onPress}>
+            {icon && <View style={styleSheet.icon}>
+                <MaterialIcon size={icon.size} name={icon.name} color={icon.color}></MaterialIcon>
+            </View>}
+            {text && <TextField text={text.text} color={text.color} fontWeight={text.weight}
+                                textSize={text.size}></TextField>}
         </TouchableOpacity>
     );
 }

@@ -19,6 +19,6 @@ export const IconSizes = {
     extraLarge: 27,
 };
 
-export const MaterialIcon = ({size="medium", name, color="black"}: IconProps) => (
-    <MaterialCommunityIcons name={name} size={IconSizes[size]} color={color} />
+export const MaterialIcon = ({size = "medium", name, color = "black"}: IconProps) => (
+    <MaterialCommunityIcons name={name} size={IconSizes[size]} color={color}/>
 );

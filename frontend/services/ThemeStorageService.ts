@@ -12,7 +12,7 @@ export const storeTheme = async (value: boolean) => {
 }
 
 
-export const getTheme = async () : Promise<boolean> => {
+export const getTheme = async (): Promise<boolean> => {
     try {
         const value = JSON.parse(<string>await AsyncStorage.getItem(storeKey))
         console.log("getTheme", value)
@@ -23,7 +23,7 @@ export const getTheme = async () : Promise<boolean> => {
         await storeTheme(false)
         return false
 
-    } catch(e) {
+    } catch (e) {
         return false;
     }
 }

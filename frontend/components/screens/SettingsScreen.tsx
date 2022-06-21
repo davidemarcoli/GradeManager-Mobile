@@ -1,11 +1,11 @@
-import {Switch, Text, TouchableRipple, useTheme} from "react-native-paper";
+import {Switch, Text} from "react-native-paper";
 import {PreferencesContext} from "../../theme/PreferencesContext";
-import React, {useState} from "react";
+import React from "react";
 import {View} from "react-native";
 
 export default function SettingsScreen() {
 
-    const { toggleTheme, isThemeDark } = React.useContext(PreferencesContext);
+    const {toggleTheme, isThemeDark} = React.useContext(PreferencesContext);
 
     return (
         <View style={{flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "row"}}>

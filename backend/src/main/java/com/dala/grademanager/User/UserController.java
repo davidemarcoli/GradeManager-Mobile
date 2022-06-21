@@ -24,19 +24,19 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public User getUser(@PathVariable("email") String email) {
         return userService.getUserByEmail(email);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/security/register")
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/login")
+    @GetMapping("/security/login")
     public User loginUser(@RequestBody User user) {
-        return userService.saveUser(user);
+        return userService.loginUser(user);
     }
 
 }
