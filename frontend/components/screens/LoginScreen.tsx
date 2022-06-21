@@ -110,7 +110,7 @@ export default function LoginScreen() {
             ></IconButton>
 
             <TextField
-                text={"Or, requestLogin with..."}
+                text={"Or, login with..."}
                 textSize={12}
                 marginTop={30}
             ></TextField>
