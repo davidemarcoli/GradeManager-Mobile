@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import TextField from "../atoms/TextField";
-import {StyleSheet, View} from "react-native";
+import { StyleSheet, View } from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
 import {Text, useTheme} from "react-native-paper";
@@ -64,46 +64,46 @@ export default function RegisterScreen() {
             })
     }
 
-    function loginWithGoogle() {
-        console.log(data);
-    }
+  function loginWithGoogle() {
+    console.log(data);
+  }
 
-    const theme = useTheme();
-    const navigation = useNavigation();
+  const theme = useTheme();
+  const navigation = useNavigation();
 
-    return (
-        <View
-            style={{
-                flex: 1,
-                justifyContent: "center",
-                marginLeft: 40,
-                marginRight: 40,
-            }}
-        >
-            <TextField
-                text={"Register"}
-                textSize={30}
-                fontWeight={"bold"}
-                alignments={"flex-start"}
-            ></TextField>
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        marginLeft: 40,
+        marginRight: 40,
+      }}
+    >
+      <TextField
+        text={"Register"}
+        textSize={30}
+        fontWeight={"bold"}
+        alignments={"flex-start"}
+      ></TextField>
 
-            <IconButton
-                border={{width: 1}}
-                marginTop={30}
-                height={50}
-                borderRadius={5}
-                onPress={() => {
-                    loginWithGoogle();
-                }}
-                icon={{name: "google", size: "extraLarge", color: theme.colors.text}}
-                backgroundColor={theme.colors.navbarBackground}
-            ></IconButton>
+      <IconButton
+        border={{ width: 1 }}
+        marginTop={30}
+        height={50}
+        borderRadius={5}
+        onPress={() => {
+          loginWithGoogle();
+        }}
+        icon={{ name: "google", size: "extraLarge", color: theme.colors.text }}
+        backgroundColor={theme.colors.navbarBackground}
+      ></IconButton>
 
-            <TextField
-                text={"Or, register with email.."}
-                textSize={12}
-                marginTop={30}
-            ></TextField>
+      <TextField
+        text={"Or, register with email.."}
+        textSize={12}
+        marginTop={30}
+      ></TextField>
 
       <TextInputField
         label={"Email"}
@@ -184,7 +184,7 @@ export default function RegisterScreen() {
 }
 
 const styles = StyleSheet.create({
-    space: {
-        marginBottom: 10,
-    },
+  space: {
+    marginBottom: 10,
+  },
 });

@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from "react";
 import TextField from "../atoms/TextField";
-import {StyleSheet, View} from "react-native";
+import { StyleSheet, View } from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
+import { Text, useTheme } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+
 import {Text, useTheme} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
 import {login} from "../../services/UserService";
@@ -47,28 +50,28 @@ export default function LoginScreen() {
             });
     }
 
-    function loginWithGoogle() {
-        console.log(data);
-    }
+  function loginWithGoogle() {
+    console.log(data);
+  }
 
-    const theme = useTheme();
-    const navigation = useNavigation();
+  const theme = useTheme();
+  const navigation = useNavigation();
 
-    return (
-        <View
-            style={{
-                flex: 1,
-                justifyContent: "center",
-                marginLeft: 40,
-                marginRight: 40,
-            }}
-        >
-            <TextField
-                text={"Login"}
-                textSize={30}
-                fontWeight={"bold"}
-                alignments={"flex-start"}
-            ></TextField>
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        marginLeft: 40,
+        marginRight: 40,
+      }}
+    >
+      <TextField
+        text={"Login"}
+        textSize={30}
+        fontWeight={"bold"}
+        alignments={"flex-start"}
+      ></TextField>
 
             <TextInputField
                 label={"Email"}
@@ -109,48 +112,48 @@ export default function LoginScreen() {
                 backgroundColor={theme.colors.accent}
             ></IconButton>
 
-            <TextField
-                text={"Or, login with..."}
-                textSize={12}
-                marginTop={30}
-            ></TextField>
+      <TextField
+        text={"Or, login with..."}
+        textSize={12}
+        marginTop={30}
+      ></TextField>
 
-            <IconButton
-                border={{width: 1, color: "black"}}
-                marginTop={30}
-                height={50}
-                borderRadius={5}
-                onPress={() => {
-                    loginWithGoogle();
-                }}
-                icon={{name: "google", size: "extraLarge", color: theme.colors.text}}
-                backgroundColor={theme.colors.navbarBackground}
-            ></IconButton>
+      <IconButton
+        border={{ width: 1 }}
+        marginTop={30}
+        height={50}
+        borderRadius={5}
+        onPress={() => {
+          requestLogin();
+        }}
+        icon={{ name: "google", size: "extraLarge", color: theme.colors.text }}
+        backgroundColor={theme.colors.navbarBackground}
+      ></IconButton>
 
-            <View
-                style={{
-                    flexDirection: "row",
-                    marginTop: 25,
-                    justifyContent: "center",
-                }}
-            >
-                <TextField text={"Need a new account? "} textSize={12}></TextField>
-                <Text
-                    onPress={() => {
-                        navigation.navigate("Register");
-                    }}
-                    style={{color: "#6C63FF"}}
-                >
-                    Register
-                </Text>
-            </View>
-            <CustomSnackbar visible={isSnackbarVisible} message={error} onDismiss={onDismissSnackBar}/>
-        </View>
-    );
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 25,
+          justifyContent: "center",
+        }}
+      >
+        <TextField text={"Need a new account? "} textSize={12}></TextField>
+        <Text
+          onPress={() => {
+            navigation.navigate("Register");
+          }}
+          style={{ color: "#6C63FF" }}
+        >
+          Register
+        </Text>
+      </View>
+      <CustomSnackbar visible={isSnackbarVisible} message={error} onDismiss={onDismissSnackBar}/>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    space: {
-        marginBottom: 10,
-    },
+  space: {
+    marginBottom: 10,
+  },
 });
