@@ -34,11 +34,12 @@ type TextInputFieldProps = {
     padding?: number;
     onChangeText?: (text: string) => void;
     icon?: {
-        name?: string;
-        size?: IconSizeProps["iconSizes"];
-        color?: string;
-        padding?: number;
+      name?: string;
+      size?: IconSizeProps["iconSizes"];
+      color?: string;
+      padding?: number;
     };
+  };
 };
 
 export default function TextInputField({
