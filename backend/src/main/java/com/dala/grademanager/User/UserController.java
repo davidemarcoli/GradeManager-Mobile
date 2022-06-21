@@ -1,9 +1,15 @@
 package com.dala.grademanager.User;
 
+import com.dala.grademanager.exceptions.LoginException;
 import com.dala.grademanager.jpa.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
+import javax.persistence.EntityExistsException;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,12 +36,12 @@ public class UserController {
     }
 
     @PostMapping("/security/register")
-    public User saveUser(@RequestBody User user) {
+    public User saveUser(@RequestBody User user) throws LoginException {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/security/login")
-    public User loginUser(@RequestBody User user) {
+    @PostMapping("/security/login")
+    public User loginUser(@RequestBody User user) throws LoginException {
         return userService.loginUser(user);
     }
 

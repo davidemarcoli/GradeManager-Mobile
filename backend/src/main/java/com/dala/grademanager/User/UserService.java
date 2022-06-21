@@ -1,5 +1,6 @@
 package com.dala.grademanager.User;
 
+import com.dala.grademanager.exceptions.LoginException;
 import com.dala.grademanager.jpa.User;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
-    User saveUser(User user);
+    User saveUser(User user) throws LoginException;
 
-    User loginUser(User user);
+    User loginUser(User user) throws LoginException;
 }

@@ -1,20 +1,67 @@
-import React from "react";
+import React, {useEffect} from "react";
 import TextField from "../atoms/TextField";
 import {StyleSheet, View} from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
 import {Text, useTheme} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
+import * as yup from "yup";
+import CustomSnackbar from "../atoms/CustomSnackbar";
+import {register} from "../../services/UserService";
+import {User} from "../../models/User";
+
+const schema = yup.object().shape({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(8),
+    name: yup.string().required(),
+});
 
 export default function RegisterScreen() {
     const [data, setData] = React.useState({
-        username: "",
+        email: "",
         password: "",
-        fullname: "",
+        name: "",
     });
 
-    function login() {
+    const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
+    const [error, setError] = React.useState("");
+    const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
+    const onDismissSnackBar = () => setIsSnackbarVisible(false);
+
+    useEffect(() => {
+        if (error) {
+            onToggleSnackBar();
+        }
+    }, [error]);
+
+    function requestRegistration() {
         console.log(data);
+
+        schema.validate(data).then(() => {
+            console.log("Input valid");
+
+            register(new User(undefined, data.email, data.password, data.name)).then((response) => {
+                if (response.ok) {
+                    navigation.navigate("Exams");
+
+                } else {
+                    response.text().then(text => {
+                        // console.error(text)
+                        setError(text);
+                    })
+                }
+            }).catch(error => {
+                console.error(error);
+                setError(error);
+            });
+
+
+        })
+            .catch((error: any) => {
+                console.log(error.errors)
+                setError(error.errors[0]);
+                onToggleSnackBar();
+            })
     }
 
     function loginWithGoogle() {
@@ -60,11 +107,11 @@ export default function RegisterScreen() {
 
       <TextInputField
         label={"Email"}
-        defaultValue={data.username}
+        defaultValue={data.email}
         onChangeText={(value: string) =>
           setData({
             ...data,
-            username: value,
+            email: value,
           })
         }
         marginTop={20}
@@ -88,11 +135,11 @@ export default function RegisterScreen() {
 
       <TextInputField
         label={"Full name"}
-        defaultValue={data.fullname}
+        defaultValue={data.name}
         onChangeText={(value: string) =>
           setData({
             ...data,
-            fullname: value,
+            name: value,
           })
         }
         marginTop={20}
@@ -108,7 +155,7 @@ export default function RegisterScreen() {
                 height={50}
                 borderRadius={5}
                 onPress={() => {
-                    login();
+                    requestRegistration();
                 }}
                 text={{text: "Register", weight: "bold"}}
                 backgroundColor={theme.colors.accent}
@@ -131,6 +178,7 @@ export default function RegisterScreen() {
                     Login
                 </Text>
             </View>
+            <CustomSnackbar visible={isSnackbarVisible} message={error} onDismiss={onDismissSnackBar}/>
         </View>
     );
 }
