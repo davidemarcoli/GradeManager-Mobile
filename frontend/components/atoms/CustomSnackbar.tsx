@@ -1,5 +1,5 @@
 import React from "react";
-import { Snackbar } from "react-native-paper";
+import { Snackbar, Text } from "react-native-paper";
 
 type SnackbarProps = {
     message?: string;
@@ -12,13 +12,12 @@ type SnackbarProps = {
 export default function CustomSnackbar({message, visible=true, duration=5000, onDismiss=(() => {}), onPress=() => {}}: SnackbarProps) {
 
     if (!message) {
-        visible = false;
-        message = "";
+        return null;
     }
 
     return (
         <Snackbar
-            wrapperStyle={{bottom: 15}}
+            wrapperStyle={{bottom: 50}}
             visible={visible}
             onDismiss={onDismiss}
             action={{

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import TextField from "../atoms/TextField";
 import {StyleSheet, View} from "react-native";
 import TextInputField from "../atoms/TextInputField";
@@ -24,21 +24,35 @@ export default function RegisterScreen() {
     });
 
     const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
-    const [error, setError] = React.useState(undefined);
+    const [error, setError] = React.useState("");
     const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
     const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
-    function login() {
+    useEffect(() => {
+        if (error) {
+            onToggleSnackBar();
+        }
+    }, [error]);
+
+    function requestRegistration() {
         console.log(data);
 
         schema.validate(data).then(() => {
             console.log("Input valid");
 
-            register(new User(undefined, data.email, data.password, data.name)).then(() => {
-                navigation.navigate("Exams");
+            register(new User(undefined, data.email, data.password, data.name)).then((response) => {
+                if (response.ok) {
+                    navigation.navigate("Exams");
+
+                } else {
+                    response.text().then(text => {
+                        // console.error(text)
+                        setError(text);
+                    })
+                }
             }).catch(error => {
+                console.error(error);
                 setError(error);
-                onToggleSnackBar();
             });
 
 
@@ -141,7 +155,7 @@ export default function RegisterScreen() {
                 height={50}
                 borderRadius={5}
                 onPress={() => {
-                    login();
+                    requestRegistration();
                 }}
                 text={{text: "Register", weight: "bold"}}
                 backgroundColor={theme.colors.accent}
