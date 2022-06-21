@@ -3,6 +3,7 @@ import { View } from "react-native";
 import TextField from "../atoms/TextField";
 import { Avatar, Button, Card, Title, useTheme } from "react-native-paper";
 import TextInputField from "../atoms/TextInputField";
+import IconButton from "../atoms/IconButton";
 
 export default function GradesScreen() {
   const [data, setData] = React.useState({
@@ -11,7 +12,12 @@ export default function GradesScreen() {
     subject: "",
     school: "",
   });
+
   const theme = useTheme();
+
+  function addGrade() {
+    console.log(data);
+  }
 
   return (
     <View
@@ -20,6 +26,16 @@ export default function GradesScreen() {
         justifyContent: "center",
         marginLeft: 40,
         marginRight: 40,
+
+        // borderWidth: 1,
+        // borderRadius: 5,
+        // borderColor: "#ddd",
+        // borderBottomWidth: 0,
+        // shadowColor: "#000000",
+        // shadowOffset: { width: 0, height: 2 },
+        // shadowOpacity: 0.9,
+        // shadowRadius: 3,
+        // elevation: 3,
       }}
     >
       <TextInputField
@@ -99,6 +115,16 @@ export default function GradesScreen() {
           text: "ex: BMS",
         }}
       ></TextInputField>
+      <IconButton
+        marginTop={30}
+        height={50}
+        borderRadius={30}
+        onPress={() => {
+          addGrade();
+        }}
+        text={{ text: "ADD GRADE", weight: "bold" }}
+        backgroundColor={theme.colors.accent}
+      ></IconButton>
     </View>
   );
 }
