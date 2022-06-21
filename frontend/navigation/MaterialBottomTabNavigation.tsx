@@ -31,19 +31,25 @@ export default function MaterialBottomTabNavigation({theme}: ThemeProps) {
         return (
             <NavigationContainer theme={theme}>
                 <View style={{width: '100%', height: '100%', backgroundColor: "#E5E5E5"}}>
-                    <Stack.Navigator initialRouteName={"Login"} activeColor={"#F46B45"} inactiveColor={"#99A0AC"} barStyle={{backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20}}>
+                    <Stack.Navigator initialRouteName={"Login"} activeColor={"#F46B45"} inactiveColor={"#99A0AC"}
+                                     barStyle={{
+                                         backgroundColor: 'white',
+                                         borderTopLeftRadius: 20,
+                                         borderTopRightRadius: 20
+                                     }}>
                         <Stack.Screen name="Login" component={LoginScreen} options={{
                             tabBarLabel: "Login",
                             tabBarIcon: ({color}) => (
-                                <MaterialIcon name={"calendar-month-outline"} color={color} size={"footer"}></MaterialIcon>
+                                <MaterialIcon name={"calendar-month-outline"} color={color}
+                                              size={"footer"}></MaterialIcon>
                             )
-                        }} />
+                        }}/>
                         <Stack.Screen name="Test" component={TabOneScreen} options={{
                             tabBarLabel: "Test",
                             tabBarIcon: ({color}) => (
                                 <MaterialIcon name={"face-man-outline"} color={color} size={"footer"}></MaterialIcon>
                             )
-                        }} />
+                        }}/>
                     </Stack.Navigator>
                 </View>
             </NavigationContainer>

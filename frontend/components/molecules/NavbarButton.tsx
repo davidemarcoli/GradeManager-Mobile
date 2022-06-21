@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {StyleSheet, TouchableOpacity} from "react-native";
 import IconButton from "../atoms/IconButton";
 import TextField from "../atoms/TextField";
 
@@ -11,13 +11,20 @@ type NavbarButtonProps = {
     text: string;
 }
 
-export default function NavbarButton({onPress, iconName, color = "black", backgroundColor = "white" ,text}: NavbarButtonProps) {
+export default function NavbarButton({
+                                         onPress,
+                                         iconName,
+                                         color = "black",
+                                         backgroundColor = "white",
+                                         text
+                                     }: NavbarButtonProps) {
 
     const stylesSheet = styles({onPress, iconName, color, text, backgroundColor})
 
     return (
         <TouchableOpacity onPress={onPress} style={[stylesSheet.row]}>
-            <IconButton onPress={onPress} icon={{name: iconName, size: "large", color: color}} backgroundColor={backgroundColor}></IconButton>
+            <IconButton onPress={onPress} icon={{name: iconName, size: "large", color: color}}
+                        backgroundColor={backgroundColor}></IconButton>
             <TextField text={text} fontWeight={"bold"} textSize={13} marginTop={"0%"} color={color}></TextField>
         </TouchableOpacity>
     )
