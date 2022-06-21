@@ -1,21 +1,68 @@
-import React from "react";
+import React, {useEffect} from "react";
 import TextField from "../atoms/TextField";
 import { StyleSheet, View } from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
-import { Text, useTheme } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
+import {Text, useTheme} from "react-native-paper";
+import {useNavigation} from "@react-navigation/native";
+import * as yup from "yup";
+import CustomSnackbar from "../atoms/CustomSnackbar";
+import {register} from "../../services/UserService";
+import {User} from "../../models/User";
+
+const schema = yup.object().shape({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(8),
+    name: yup.string().required(),
+});
 
 export default function RegisterScreen() {
-  const [data, setData] = React.useState({
-    username: "",
-    password: "",
-    fullname: "",
-  });
+    const [data, setData] = React.useState({
+        email: "",
+        password: "",
+        name: "",
+    });
 
-  function login() {
-    console.log(data);
-  }
+    const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
+    const [error, setError] = React.useState("");
+    const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
+    const onDismissSnackBar = () => setIsSnackbarVisible(false);
+
+    useEffect(() => {
+        if (error) {
+            onToggleSnackBar();
+        }
+    }, [error]);
+
+    function requestRegistration() {
+        console.log(data);
+
+        schema.validate(data).then(() => {
+            console.log("Input valid");
+
+            register(new User(undefined, data.email, data.password, data.name)).then((response) => {
+                if (response.ok) {
+                    navigation.navigate("Exams");
+
+                } else {
+                    response.text().then(text => {
+                        // console.error(text)
+                        setError(text);
+                    })
+                }
+            }).catch(error => {
+                console.error(error);
+                setError(error);
+            });
+
+
+        })
+            .catch((error: any) => {
+                console.log(error.errors)
+                setError(error.errors[0]);
+                onToggleSnackBar();
+            })
+    }
 
   function loginWithGoogle() {
     console.log(data);
@@ -60,11 +107,11 @@ export default function RegisterScreen() {
 
       <TextInputField
         label={"Email"}
-        defaultValue={data.username}
+        defaultValue={data.email}
         onChangeText={(value: string) =>
           setData({
             ...data,
-            username: value,
+            email: value,
           })
         }
         marginTop={20}
@@ -88,11 +135,11 @@ export default function RegisterScreen() {
 
       <TextInputField
         label={"Full name"}
-        defaultValue={data.fullname}
+        defaultValue={data.name}
         onChangeText={(value: string) =>
           setData({
             ...data,
-            fullname: value,
+            name: value,
           })
         }
         marginTop={20}
@@ -103,36 +150,37 @@ export default function RegisterScreen() {
         }}
       ></TextInputField>
 
-      <IconButton
-        marginTop={30}
-        height={50}
-        borderRadius={5}
-        onPress={() => {
-          login();
-        }}
-        text={{ text: "Register", weight: "bold" }}
-        backgroundColor={theme.colors.accent}
-      ></IconButton>
+            <IconButton
+                marginTop={30}
+                height={50}
+                borderRadius={5}
+                onPress={() => {
+                    requestRegistration();
+                }}
+                text={{text: "Register", weight: "bold"}}
+                backgroundColor={theme.colors.accent}
+            ></IconButton>
 
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 25,
-          justifyContent: "center",
-        }}
-      >
-        <TextField text={"Already have an account? "} textSize={12}></TextField>
-        <Text
-          onPress={() => {
-            navigation.navigate("Login");
-          }}
-          style={{ color: "#6C63FF" }}
-        >
-          Login
-        </Text>
-      </View>
-    </View>
-  );
+            <View
+                style={{
+                    flexDirection: "row",
+                    marginTop: 25,
+                    justifyContent: "center",
+                }}
+            >
+                <TextField text={"Already have an account? "} textSize={12}></TextField>
+                <Text
+                    onPress={() => {
+                        navigation.navigate("Login");
+                    }}
+                    style={{color: "#6C63FF"}}
+                >
+                    Login
+                </Text>
+            </View>
+            <CustomSnackbar visible={isSnackbarVisible} message={error} onDismiss={onDismissSnackBar}/>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
