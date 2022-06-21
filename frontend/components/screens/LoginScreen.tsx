@@ -50,6 +50,7 @@ export default function LoginScreen() {
           })
         }
         marginTop={20}
+        mainIcon={{ name: "at", size: "medium", color: theme.colors.text }}
       ></TextInputField>
 
       <TextInputField
@@ -64,6 +65,7 @@ export default function LoginScreen() {
         }
         marginTop={20}
         icon={{}}
+        mainIcon={{ name: "lock", size: "medium", color: theme.colors.text }}
       ></TextInputField>
 
       <IconButton

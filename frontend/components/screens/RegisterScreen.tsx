@@ -69,6 +69,7 @@ export default function RegisterScreen() {
           })
         }
         marginTop={20}
+        mainIcon={{ name: "at", size: "medium", color: theme.colors.text }}
       ></TextInputField>
 
       <TextInputField
@@ -83,6 +84,7 @@ export default function RegisterScreen() {
         }
         marginTop={20}
         icon={{}}
+        mainIcon={{ name: "lock", size: "medium", color: theme.colors.text }}
       ></TextInputField>
 
       <TextInputField
@@ -95,6 +97,11 @@ export default function RegisterScreen() {
           })
         }
         marginTop={20}
+        mainIcon={{
+          name: "account",
+          size: "medium",
+          color: theme.colors.text,
+        }}
       ></TextInputField>
 
       <IconButton
