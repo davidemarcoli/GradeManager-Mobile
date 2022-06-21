@@ -39,31 +39,33 @@ export default function LoginScreen() {
                 alignments={"flex-start"}
             ></TextField>
 
-            <TextInputField
-                label={"Email"}
-                defaultValue={data.username}
-                onChangeText={(value: string) =>
-                    setData({
-                        ...data,
-                        username: value,
-                    })
-                }
-                marginTop={20}
-            ></TextInputField>
+      <TextInputField
+        label={"Email"}
+        defaultValue={data.username}
+        onChangeText={(value: string) =>
+          setData({
+            ...data,
+            username: value,
+          })
+        }
+        marginTop={20}
+        mainIcon={{ name: "at", size: "medium", color: theme.colors.text }}
+      ></TextInputField>
 
-            <TextInputField
-                label={"Password"}
-                secureTextEntry={true}
-                defaultValue={data.password}
-                onChangeText={(value: string) =>
-                    setData({
-                        ...data,
-                        password: value,
-                    })
-                }
-                marginTop={20}
-                icon={{}}
-            ></TextInputField>
+      <TextInputField
+        label={"Password"}
+        secureTextEntry={true}
+        defaultValue={data.password}
+        onChangeText={(value: string) =>
+          setData({
+            ...data,
+            password: value,
+          })
+        }
+        marginTop={20}
+        icon={{}}
+        mainIcon={{ name: "lock", size: "medium", color: theme.colors.text }}
+      ></TextInputField>
 
             <IconButton
                 marginTop={30}
