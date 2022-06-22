@@ -70,12 +70,14 @@ export default function TextInputField({
       {icon ? (
         <View>
           <View style={createStyles(marginTop, width, padding).field}>
-            <MaterialCommunityIcons
-              style={iconStyle.icon}
-              name={mainIcon.name}
-              size={22}
-              color={"grey"}
-            />
+            {mainIcon ? (
+              <MaterialCommunityIcons
+                style={iconStyle.icon}
+                name={mainIcon.name}
+                size={22}
+                color={"grey"}
+              />
+            ) : null}
             <TextInput
               keyboardType={numeric ? "numeric" : "default"}
               style={createStyles(marginTop, width, padding).textInput}
@@ -106,12 +108,14 @@ export default function TextInputField({
       {!icon ? (
         <View>
           <View style={createStyles(marginTop, width, padding).field}>
-            <MaterialCommunityIcons
-              style={iconStyle.icon}
-              name={mainIcon.name}
-              size={22}
-              color={"grey"}
-            />
+            {mainIcon ? (
+              <MaterialCommunityIcons
+                style={iconStyle.icon}
+                name={mainIcon.name}
+                size={22}
+                color={"grey"}
+              />
+            ) : null}
             <TextInput
               keyboardType={numeric ? "numeric" : "default"}
               style={createStyles(marginTop, width, padding).textInput}

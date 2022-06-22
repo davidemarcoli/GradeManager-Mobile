@@ -1,54 +1,52 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "../atoms/TextField";
 import { StyleSheet, View } from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
+
 import { Text, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-
-import {Text, useTheme} from "react-native-paper";
-import {useNavigation} from "@react-navigation/native";
-import {login} from "../../services/UserService";
-import {User} from "../../models/User";
+import { login } from "../../services/UserService";
+import { User } from "../../models/User";
 import CustomSnackbar from "../atoms/CustomSnackbar";
 
 export default function LoginScreen() {
-    const [data, setData] = React.useState({
-        email: "",
-        password: "",
-    });
+  const [data, setData] = React.useState({
+    email: "",
+    password: "",
+  });
 
-    const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
-    const [error, setError] = React.useState("");
-    const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
-    const onDismissSnackBar = () => setIsSnackbarVisible(false);
+  const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
+  const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
-    useEffect(() => {
-        if (error) {
-            onToggleSnackBar();
-        }
-    }, [error]);
-
-    function requestLogin() {
-        console.log(data);
-        login(data.email, data.password)
-            .then((response) => {
-                if (response.ok) {
-                    navigation.navigate("Exams");
-                } else {
-                    response.text().then(text => {
-                        // console.error(text)
-                        setError(text);
-                    })
-                }
-
-                // console.error(JSON.stringify(response))
-            })
-            .catch(error => {
-                // console.error(JSON.stringify(error));
-                setError(error);
-            });
+  useEffect(() => {
+    if (error) {
+      onToggleSnackBar();
     }
+  }, [error]);
+
+  function requestLogin() {
+    console.log(data);
+    login(data.email, data.password)
+      .then((response) => {
+        if (response.ok) {
+          navigation.navigate("Exams");
+        } else {
+          response.text().then((text) => {
+            // console.error(text)
+            setError(text);
+          });
+        }
+
+        // console.error(JSON.stringify(response))
+      })
+      .catch((error) => {
+        // console.error(JSON.stringify(error));
+        setError(error);
+      });
+  }
 
   function loginWithGoogle() {
     console.log(data);
@@ -73,44 +71,44 @@ export default function LoginScreen() {
         alignments={"flex-start"}
       ></TextField>
 
-            <TextInputField
-                label={"Email"}
-                defaultValue={data.email}
-                onChangeText={(value: string) =>
-                    setData({
-                        ...data,
-                        email: value,
-                    })
-                }
-                marginTop={20}
-                mainIcon={{name: "at", size: "medium", color: theme.colors.text}}
-            ></TextInputField>
+      <TextInputField
+        label={"Email"}
+        defaultValue={data.email}
+        onChangeText={(value: string) =>
+          setData({
+            ...data,
+            email: value,
+          })
+        }
+        marginTop={20}
+        mainIcon={{ name: "at", size: "medium", color: theme.colors.text }}
+      ></TextInputField>
 
-            <TextInputField
-                label={"Password"}
-                secureTextEntry={true}
-                defaultValue={data.password}
-                onChangeText={(value: string) =>
-                    setData({
-                        ...data,
-                        password: value,
-                    })
-                }
-                marginTop={20}
-                icon={{}}
-                mainIcon={{name: "lock", size: "medium", color: theme.colors.text}}
-            ></TextInputField>
+      <TextInputField
+        label={"Password"}
+        secureTextEntry={true}
+        defaultValue={data.password}
+        onChangeText={(value: string) =>
+          setData({
+            ...data,
+            password: value,
+          })
+        }
+        marginTop={20}
+        icon={{}}
+        mainIcon={{ name: "lock", size: "medium", color: theme.colors.text }}
+      ></TextInputField>
 
-            <IconButton
-                marginTop={30}
-                height={50}
-                borderRadius={5}
-                onPress={() => {
-                    requestLogin();
-                }}
-                text={{text: "Login", weight: "bold"}}
-                backgroundColor={theme.colors.accent}
-            ></IconButton>
+      <IconButton
+        marginTop={30}
+        height={50}
+        borderRadius={5}
+        onPress={() => {
+          requestLogin();
+        }}
+        text={{ text: "Login", weight: "bold" }}
+        backgroundColor={theme.colors.accent}
+      ></IconButton>
 
       <TextField
         text={"Or, login with..."}
@@ -147,7 +145,11 @@ export default function LoginScreen() {
           Register
         </Text>
       </View>
-      <CustomSnackbar visible={isSnackbarVisible} message={error} onDismiss={onDismissSnackBar}/>
+      <CustomSnackbar
+        visible={isSnackbarVisible}
+        message={error}
+        onDismiss={onDismissSnackBar}
+      />
     </View>
   );
 }
