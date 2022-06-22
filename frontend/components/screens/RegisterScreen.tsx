@@ -7,7 +7,7 @@ import {Text, useTheme} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
 import * as yup from "yup";
 import CustomSnackbar from "../atoms/CustomSnackbar";
-import {register} from "../../services/UserService";
+import {register, storeUser} from "../../services/UserService";
 import {User} from "../../models/User";
 
 const schema = yup.object().shape({
@@ -42,6 +42,7 @@ export default function RegisterScreen() {
 
             register(new User(undefined, data.email, data.password, data.name)).then((response) => {
                 if (response.ok) {
+                    console.log(response)
                     navigation.navigate("Exams");
 
                 } else {

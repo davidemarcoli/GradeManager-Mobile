@@ -1,4 +1,5 @@
 import {User} from "../models/User";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function register(user: User) {
     return fetch('http://10.0.2.2:8080/api/users/security/register', {
@@ -20,4 +21,42 @@ export function login(email: string, password: string) {
         },
         body: JSON.stringify({email: email, password: password})
     });
+}
+
+export function plainLogin(email: string, password: string) {
+    return fetch('http://10.0.2.2:8080/api/users/security/plainLogin', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email: email, password: password})
+    });
+}
+
+const storeKey = '@user'
+
+export const storeUser = async (user: User) => {
+    try {
+        console.log('storeUser', user)
+        await AsyncStorage.setItem(storeKey, JSON.stringify(user))
+    } catch (e) {
+        // saving error
+    }
+}
+
+
+export const getUser = async (): Promise<User | undefined> => {
+    try {
+        const user = JSON.parse(<string>await AsyncStorage.getItem(storeKey))
+        console.log("getUser", user)
+        if (user !== null) {
+            return user
+        }
+
+        return undefined
+
+    } catch (e) {
+        return undefined;
+    }
 }

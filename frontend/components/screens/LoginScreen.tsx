@@ -5,7 +5,7 @@ import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
 import {Text, useTheme} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
-import {login} from "../../services/UserService";
+import {login, storeUser} from "../../services/UserService";
 import {User} from "../../models/User";
 import CustomSnackbar from "../atoms/CustomSnackbar";
 
@@ -31,7 +31,11 @@ export default function LoginScreen() {
         login(data.email, data.password)
             .then((response) => {
                 if (response.ok) {
-                    navigation.navigate("Exams");
+                    response.json().then(data => {
+                        console.log(data)
+                        storeUser(data as User)
+                        navigation.navigate("Exams");
+                    })
                 } else {
                     response.text().then(text => {
                         // console.error(text)

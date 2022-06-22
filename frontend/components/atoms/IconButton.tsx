@@ -10,12 +10,15 @@ type IconButtonProps = {
         size: IconSizeProps['iconSizes'];
         color?: string;
         padding?: number;
+        opacity: number;
+        iconType: "MaterialIcons" | "MaterialCommunityIcons"
     };
     text?: {
         text: string,
         color?: string;
         size?: number;
         weight?: string;
+        opacity?: number;
     };
     backgroundColor?: string;
     borderRadius?: number;
@@ -58,10 +61,10 @@ export default function IconButton({
             borderRadius: borderRadius, ...additionalStyles
         }]} onPress={onPress}>
             {icon && <View style={styleSheet.icon}>
-                <MaterialIcon size={icon.size} name={icon.name} color={icon.color}></MaterialIcon>
+                <MaterialIcon iconType={icon.iconType} size={icon.size} name={icon.name} color={icon.color} opacity={icon.opacity}></MaterialIcon>
             </View>}
             {text && <TextField text={text.text} color={text.color} fontWeight={text.weight}
-                                textSize={text.size}></TextField>}
+                                textSize={text.size} opacity={text.opacity}></TextField>}
         </TouchableOpacity>
     );
 }
@@ -75,7 +78,7 @@ const styles = (props: IconButtonProps) => StyleSheet.create({
     },
     flex: {
         flex: props.sameRow ? 1 : 0,
-        flexDirection: "row"
+        flexDirection: props.sameRow ? "row" : "column"
     },
     text: {
         fontSize: 20,

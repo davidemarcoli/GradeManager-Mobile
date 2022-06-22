@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -49,6 +50,19 @@ public class UserServiceImpl implements UserService {
             throw new LoginException(HttpStatus.NOT_FOUND, "User with email " + user.getEmail() + " does not exist. Please register!");
         }
         if (!BCrypt.checkpw(user.getPassword(), userFromDb.getPassword())) {
+            throw new LoginException(HttpStatus.FORBIDDEN, "Wrong password. Please try again!");
+        }
+
+        return userFromDb;
+    }
+
+    @Override
+    public User validateUserLogin(User user) throws LoginException {
+        User userFromDb = userRepository.findUserByEmail(user.getEmail()).orElse(null);
+        if (userFromDb == null) {
+            throw new LoginException(HttpStatus.NOT_FOUND, "User with email " + user.getEmail() + " does not exist. Please register!");
+        }
+        if (!Objects.equals(user.getPassword(), userFromDb.getPassword())) {
             throw new LoginException(HttpStatus.FORBIDDEN, "Wrong password. Please try again!");
         }
 

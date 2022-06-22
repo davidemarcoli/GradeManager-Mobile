@@ -5,7 +5,7 @@ import CustomNavigation from "./navigation/CustomNavigation";
 
 import {
     DarkTheme as NavigationDarkTheme,
-    DefaultTheme as NavigationDefaultTheme,
+    DefaultTheme as NavigationDefaultTheme, NavigationContainer, useNavigation,
 } from '@react-navigation/native';
 import {
     DarkTheme as PaperDarkTheme,
@@ -15,6 +15,8 @@ import {
 import merge from 'deepmerge';
 import { PreferencesContext } from "./theme/PreferencesContext";
 import {getTheme, storeTheme} from "./services/ThemeStorageService";
+import {getUser, login, storeUser} from "./services/UserService";
+import {User} from "./models/User";
 
 const navigationNumber = 2;
 
@@ -73,12 +75,12 @@ export default function App() {
         [toggleTheme, isThemeDark]
     );
 
-    let navigation = null;
+    let navigationComponent = null;
 
     if (navigationNumber === 1) {
-        navigation = <MaterialBottomTabNavigation theme={theme}/>;
+        navigationComponent = <MaterialBottomTabNavigation theme={theme}/>;
     } else if (navigationNumber === 2) {
-        navigation = <CustomNavigation theme={theme}/>;
+        navigationComponent = <CustomNavigation theme={theme}/>;
     }
 
 /*
@@ -89,7 +91,9 @@ export default function App() {
         <>
             <PreferencesContext.Provider value={preferences}>
                 <PaperProvider theme={theme}>
-                    {navigation}
+                    <NavigationContainer theme={theme}>
+                        {navigationComponent}
+                    </NavigationContainer>
                 </PaperProvider>
             </PreferencesContext.Provider>
         </>
