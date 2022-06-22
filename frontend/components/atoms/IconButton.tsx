@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {StyleSheet, TouchableOpacity, View} from "react-native";
-import {IconSizeProps, MaterialIcon} from "./MaterialIcon";
+import * as React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { IconSizeProps, MaterialIcon } from "./MaterialIcon";
 import TextField from "./TextField";
 
 type IconButtonProps = {
@@ -31,29 +31,35 @@ type IconButtonProps = {
     marginTop?: number;
 };
 
-
 export default function IconButton({
-                                       onPress,
-                                       icon,
-                                       text,
-                                       backgroundColor = "white",
-                                       borderRadius = 0,
-                                       border,
-                                       sameRow = false,
-                                       height,
-                                       marginTop
-                                   }: IconButtonProps) {
+  onPress,
+  icon,
+  text,
+  backgroundColor = "white",
+  borderRadius = 0,
+  border,
+  sameRow = false,
+  height,
+  marginTop,
+}: IconButtonProps) {
+  const styleSheet = styles({
+    onPress,
+    icon,
+    text,
+    backgroundColor: backgroundColor,
+    borderRadius,
+    border,
+    sameRow,
+  });
 
-    const styleSheet = styles({onPress, icon, text, backgroundColor: backgroundColor, borderRadius, border, sameRow});
+  let additionalStyles = {};
 
-    let additionalStyles = {};
-
-    if (height) {
-        additionalStyles = {...additionalStyles, height};
-    }
-    if (marginTop) {
-        additionalStyles = {...additionalStyles, marginTop};
-    }
+  if (height) {
+    additionalStyles = { ...additionalStyles, height };
+  }
+  if (marginTop) {
+    additionalStyles = { ...additionalStyles, marginTop };
+  }
 
     return (
         <TouchableOpacity style={[styleSheet.container, styleSheet.flex, {
@@ -69,24 +75,25 @@ export default function IconButton({
     );
 }
 
-const styles = (props: IconButtonProps) => StyleSheet.create({
+const styles = (props: IconButtonProps) =>
+  StyleSheet.create({
     container: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderColor: props.border ? props.border.color : 'black',
-        borderWidth: props.border ? props.border.width : 0,
+      alignItems: "center",
+      justifyContent: "center",
+      borderColor: props.border ? props.border.color : "black",
+      borderWidth: props.border ? props.border.width : 0,
     },
     flex: {
         flex: props.sameRow ? 1 : 0,
         flexDirection: props.sameRow ? "row" : "column"
     },
     text: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: props.text?.color ? props.text.color : "black",
+      fontSize: 20,
+      fontWeight: "bold",
+      color: props.text?.color ? props.text.color : "black",
     },
     icon: {
-        marginRight: props.text ? 0 : 0,
-        paddingRight: props.icon?.padding ? props.icon.padding : 0,
-    }
-});
+      marginRight: props.text ? 0 : 0,
+      paddingRight: props.icon?.padding ? props.icon.padding : 0,
+    },
+  });

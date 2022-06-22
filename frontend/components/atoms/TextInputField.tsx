@@ -9,6 +9,7 @@ import { IconSizeProps, MaterialIcon } from "./MaterialIcon";
 type TextInputFieldProps = {
   label: string;
   defaultValue?: string;
+  numeric?: boolean;
   placeholder?: string;
   secureTextEntry?: boolean;
   marginTop?: number;
@@ -45,6 +46,7 @@ type TextInputFieldProps = {
 export default function TextInputField({
   label,
   defaultValue = "",
+  numeric = false,
   placeholder = "",
   secureTextEntry = false,
   marginTop = 0,
@@ -65,16 +67,19 @@ export default function TextInputField({
 
   return (
     <>
-      {icon && (
+      {icon ? (
         <View>
           <View style={createStyles(marginTop, width, padding).field}>
-            <MaterialCommunityIcons
-              style={iconStyle.icon}
-              name={mainIcon.name}
-              size={22}
-              color={"grey"}
-            />
+            {mainIcon ? (
+              <MaterialCommunityIcons
+                style={iconStyle.icon}
+                name={mainIcon.name}
+                size={22}
+                color={"grey"}
+              />
+            ) : null}
             <TextInput
+              keyboardType={numeric ? "numeric" : "default"}
               style={createStyles(marginTop, width, padding).textInput}
               label={label}
               value={defaultValue}
@@ -99,30 +104,35 @@ export default function TextInputField({
           </View>
           <Text style={subtextStyle.text}>{subtext?.text}</Text>
         </View>
-      )}
-      {!icon && (
-        <View style={createStyles(marginTop, width, padding).field}>
-          <MaterialCommunityIcons
-            style={iconStyle.icon}
-            name={mainIcon.name}
-            size={22}
-            color={"grey"}
-          />
-          <TextInput
-            style={createStyles(marginTop, width, padding).textInput}
-            label={label}
-            value={defaultValue}
-            onChangeText={onChangeText}
-            placeholder={placeholder}
-            secureTextEntry={secureTextEntry}
-            selectionColor={theme.colors.accent}
-            underlineColor={theme.colors.accent}
-            activeOutlineColor={theme.colors.accent}
-            activeUnderlineColor={theme.colors.accent}
-          ></TextInput>
+      ) : null}
+      {!icon ? (
+        <View>
+          <View style={createStyles(marginTop, width, padding).field}>
+            {mainIcon ? (
+              <MaterialCommunityIcons
+                style={iconStyle.icon}
+                name={mainIcon.name}
+                size={22}
+                color={"grey"}
+              />
+            ) : null}
+            <TextInput
+              keyboardType={numeric ? "numeric" : "default"}
+              style={createStyles(marginTop, width, padding).textInput}
+              label={label}
+              value={defaultValue}
+              onChangeText={onChangeText}
+              placeholder={placeholder}
+              secureTextEntry={secureTextEntry}
+              selectionColor={theme.colors.accent}
+              underlineColor={theme.colors.accent}
+              activeOutlineColor={theme.colors.accent}
+              activeUnderlineColor={theme.colors.accent}
+            ></TextInput>
+          </View>
           <Text style={subtextStyle.text}>{subtext?.text}</Text>
         </View>
-      )}
+      ) : null}
     </>
   );
 }
