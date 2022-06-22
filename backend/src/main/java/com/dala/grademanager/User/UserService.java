@@ -16,4 +16,6 @@ public interface UserService {
     User saveUser(User user) throws LoginException;
 
     User loginUser(User user) throws LoginException;
+
+    User validateUserLogin(User user) throws LoginException;
 }

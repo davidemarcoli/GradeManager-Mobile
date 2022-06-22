@@ -3,18 +3,53 @@ import TextField from "../atoms/TextField";
 import { StyleSheet, View } from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
-
-import { Text, useTheme } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import { login } from "../../services/UserService";
-import { User } from "../../models/User";
+import {Text, useTheme} from "react-native-paper";
+import {useNavigation} from "@react-navigation/native";
+import {login, storeUser} from "../../services/UserService";
+import {User} from "../../models/User";
 import CustomSnackbar from "../atoms/CustomSnackbar";
 
 export default function LoginScreen() {
-  const [data, setData] = React.useState({
-    email: "",
-    password: "",
-  });
+    const [data, setData] = React.useState({
+        email: "",
+        password: "",
+    });
+
+    const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
+    const [error, setError] = React.useState("");
+    const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
+    const onDismissSnackBar = () => setIsSnackbarVisible(false);
+
+    useEffect(() => {
+        if (error) {
+            onToggleSnackBar();
+        }
+    }, [error]);
+
+    function requestLogin() {
+        console.log(data);
+        login(data.email, data.password)
+            .then((response) => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        console.log(data)
+                        storeUser(data as User)
+                        navigation.navigate("Exams");
+                    })
+                } else {
+                    response.text().then(text => {
+                        // console.error(text)
+                        setError(text);
+                    })
+                }
+
+                // console.error(JSON.stringify(response))
+            })
+            .catch(error => {
+                // console.error(JSON.stringify(error));
+                setError(error);
+            });
+    }
 
   const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
   const [error, setError] = React.useState("");

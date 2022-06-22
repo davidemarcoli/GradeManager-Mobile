@@ -7,8 +7,8 @@ import { Text, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import * as yup from "yup";
 import CustomSnackbar from "../atoms/CustomSnackbar";
-import { register } from "../../services/UserService";
-import { User } from "../../models/User";
+import {register, storeUser} from "../../services/UserService";
+import {User} from "../../models/User";
 
 const schema = yup.object().shape({
   email: yup.string().required().email(),
@@ -17,20 +17,52 @@ const schema = yup.object().shape({
 });
 
 export default function RegisterScreen() {
-  const [data, setData] = React.useState({
-    email: "",
-    password: "",
-    name: "",
-  });
+    const [data, setData] = React.useState({
+        email: "",
+        password: "",
+        name: "",
+    });
 
-  const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
-  const [error, setError] = React.useState("");
-  const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
-  const onDismissSnackBar = () => setIsSnackbarVisible(false);
+    const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
+    const [error, setError] = React.useState("");
+    const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
+    const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
-  useEffect(() => {
-    if (error) {
-      onToggleSnackBar();
+    useEffect(() => {
+        if (error) {
+            onToggleSnackBar();
+        }
+    }, [error]);
+
+    function requestRegistration() {
+        console.log(data);
+
+        schema.validate(data).then(() => {
+            console.log("Input valid");
+
+            register(new User(undefined, data.email, data.password, data.name)).then((response) => {
+                if (response.ok) {
+                    console.log(response)
+                    navigation.navigate("Exams");
+
+                } else {
+                    response.text().then(text => {
+                        // console.error(text)
+                        setError(text);
+                    })
+                }
+            }).catch(error => {
+                console.error(error);
+                setError(error);
+            });
+
+
+        })
+            .catch((error: any) => {
+                console.log(error.errors)
+                setError(error.errors[0]);
+                onToggleSnackBar();
+            })
     }
   }, [error]);
 

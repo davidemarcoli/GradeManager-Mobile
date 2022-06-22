@@ -45,4 +45,9 @@ public class UserController {
         return userService.loginUser(user);
     }
 
+    @PostMapping("/security/plainLogin")
+    public User validateUserLogin(@RequestBody User user) throws LoginException {
+        return userService.validateUserLogin(user);
+    }
+
 }
