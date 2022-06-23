@@ -24,12 +24,12 @@ export default function Navbar({
     const [activeTab, setActiveTab] = React.useState(0);
 
     useEffect(() => {
-        console.log("Route has changed to " + elements[activeTab].route);
+        // console.log("Route has changed to " + elements[activeTab].route);
         navigation.navigate(elements[activeTab].route);
     }, [activeTab]);
 
     let updateActiveTab = (index: number) => {
-        console.log("NavBar Button " + index + " Clicked");
+        // console.log("NavBar Button " + index + " Clicked");
         setActiveTab(index);
     };
 
