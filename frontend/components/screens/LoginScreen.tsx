@@ -192,11 +192,10 @@ export default function LoginScreen({setIsLoggedIn}: LoginScreenProps) {
                     Register
                 </Text>
             </View>
-            <CustomSnackbar
-                visible={isSnackbarVisible}
+            {isSnackbarVisible && <CustomSnackbar
                 message={error}
                 onDismiss={onDismissSnackBar}
-            />
+            />}
         </View>
     );
 }

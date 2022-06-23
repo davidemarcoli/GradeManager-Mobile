@@ -18,24 +18,21 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(updatable = false, nullable = false)
-    private UUID id;
+    @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(50)")
+    private String id;
     private String name;
     private String email;
     private String password;
+    private String profilePictureUrl;
 
     @PrePersist
     public void prePersist() {
-        /*if (id == null) {
-            id = UUID.randomUUID();
-        }*/
+        if (id == null) {
+            id = UUID.randomUUID().toString();
+        }
         // encrypt password
-        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        if (password != null)
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
 /*
         password = passwordEncoder.encode(password);
 */
