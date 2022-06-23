@@ -1,5 +1,6 @@
 import {User} from "../models/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useNavigation} from "@react-navigation/native";
 
 export function register(user: User) {
     return fetch('http://10.0.2.2:8080/api/users/security/register', {
@@ -58,5 +59,26 @@ export const getUser = async (): Promise<User | undefined> => {
 
     } catch (e) {
         return undefined;
+    }
+}
+
+// @ts-ignore
+export const doesUserExist = (): boolean => {
+        AsyncStorage.getItem(storeKey).then(value => {
+            console.log("Does User exist? ", !!value)
+            return !!value;
+        }).catch(reason => {
+            console.log("Does User exist? false :(")
+            return false;
+        })
+}
+
+export const logout = async () => {
+    try {
+        console.log('logout')
+        await AsyncStorage.removeItem(storeKey)
+        //useNavigation().navigate("Login")
+    } catch (e) {
+        // saving error
     }
 }

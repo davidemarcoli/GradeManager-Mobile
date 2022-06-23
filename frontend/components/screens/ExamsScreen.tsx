@@ -14,9 +14,6 @@ export default function ExamsScreen() {
     return (
         <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
             <TextField text={"Exams"}></TextField>
-            <View style={{width: "80%", height: "30%", paddingTop: 20}}>
-                <ProfileCard />
-            </View>
         </View>
     )
 
