@@ -1,6 +1,5 @@
 import {User} from "../models/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {useNavigation} from "@react-navigation/native";
 
 export function register(user: User) {
     return fetch('http://10.0.2.2:8080/api/users/security/register', {

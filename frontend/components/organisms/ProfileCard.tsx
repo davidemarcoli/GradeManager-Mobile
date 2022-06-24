@@ -1,4 +1,4 @@
-import { Image, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, TouchableOpacity, View} from "react-native";
 import * as Linking from 'expo-linking';
 import TextField from "../atoms/TextField";
 import IconButton from "../atoms/IconButton";
@@ -7,6 +7,8 @@ import React, {useEffect, useState} from "react";
 import {useTheme} from "react-native-paper";
 import {User} from "../../models/User";
 import {getUser} from "../../services/UserService";
+import {NavigationActions} from "react-navigation";
+import {useNavigation} from "@react-navigation/native";
 
 type ProfileCardProps = {
     user: User;
@@ -15,6 +17,7 @@ type ProfileCardProps = {
 export default function ProfileCard() {
 
     const theme = useTheme();
+    const navigation = useNavigation()
 
     const [user, setUser] = useState<User>()
 
@@ -29,13 +32,18 @@ export default function ProfileCard() {
     if (!user) return <View></View>
 
     return (
+        <>
         <CustomCard borderRadius={15}>
-            <Image style={{width: 100, height: 100, borderRadius: 50, alignSelf: "center", marginTop: -50}}
-                   source={require("../../assets/images/bitmoji.png")}></Image>
+            {!user.profilePictureUrl &&
+                <Image style={{width: 100, height: 100, borderRadius: 50, alignSelf: "center", marginTop: -50}}
+                       source={require("../../assets/images/bitmoji.png")}></Image>}
+            {user.profilePictureUrl &&
+                <Image style={{width: 100, height: 100, borderRadius: 50, alignSelf: "center", marginTop: -50}}
+                       source={{uri: user.profilePictureUrl}}></Image>}
             <TextField marginTop={10} text={user.name} textSize={20} fontWeight={"bold"}></TextField>
 
             <TouchableOpacity onPress={() => {
-                Linking.openURL("mailto:" + user?.email)
+                Linking.openURL("mailto:" + user.email)
             }}>
                 <TextField marginTop={5} text={user.email} opacity={0.75}
                            textSize={15}></TextField>
@@ -59,7 +67,7 @@ export default function ProfileCard() {
                     opacity: 0.7
                 }} backgroundColor={theme.colors.navbarBackground} sameRow={false}></IconButton>
                 <IconButton onPress={() => {
-                }} text={{text: "X Subjects", color: theme.colors.text, size: 12}} icon={{
+                }} text={{text: "X Subjects", color: theme.colors.text, size: 12, opacity: 0.7}} icon={{
                     name: "menu-book",
                     size: "medium",
                     iconType: "MaterialIcons",
@@ -67,7 +75,7 @@ export default function ProfileCard() {
                     opacity: 0.7
                 }} backgroundColor={theme.colors.navbarBackground} sameRow={false}></IconButton>
                 <IconButton onPress={() => {
-                }} text={{text: "XX Exams", color: theme.colors.text, size: 12}} icon={{
+                }} text={{text: "XX Exams", color: theme.colors.text, size: 12, opacity: 0.7}} icon={{
                     name: "file-document-edit",
                     size: "medium",
                     iconType: "MaterialCommunityIcons",
@@ -77,5 +85,6 @@ export default function ProfileCard() {
 
             </View>
         </CustomCard>
+        </>
     )
 }

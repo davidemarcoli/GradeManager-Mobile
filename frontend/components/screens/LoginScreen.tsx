@@ -48,7 +48,7 @@ export default function LoginScreen({setIsLoggedIn}: LoginScreenProps) {
 
             const savedUser = value as User;
 
-            plainLogin(new User(undefined, savedUser.email, savedUser.password, undefined, undefined))
+            plainLogin(savedUser)
                 .then((response) => {
                     if (response.ok) {
                         response.json().then(data => {
