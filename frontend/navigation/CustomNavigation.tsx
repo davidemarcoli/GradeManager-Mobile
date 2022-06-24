@@ -30,7 +30,7 @@ export default function CustomNavigation({theme}: ThemeProps) {
 
     const navbarElements: { iconName: string; text: string; route: string }[] = [
         {iconName: "calendar-month-outline", text: "Exams", route: "Exams"},
-        {iconName: "flag-outline", text: "Goals", route: "Register"},
+        {iconName: "flag-outline", text: "Goals", route: "Goals"},
         {iconName: "playlist-plus", text: "Grades", route: "Grades"},
         {
             iconName: "chart-bell-curve-cumulative",
@@ -41,7 +41,7 @@ export default function CustomNavigation({theme}: ThemeProps) {
     ];
 
     useEffect(() => {
-        console.log("Does User exist? ", doesUserExist())
+        //console.log("Does User exist? ", doesUserExist())
         setIsLoggedIn(doesUserExist())
     }, [])
 
@@ -57,10 +57,15 @@ export default function CustomNavigation({theme}: ThemeProps) {
                             headerShown: false,
                         }}
                     >
-                        <Stack.Screen name="Register" component={RegisterScreen}/>
+                        <Stack.Screen name="Register">
+                            {props => <RegisterScreen {...props} setIsLoggedIn={(value) => {
+                                console.log("Set LoggedIn from Register to " + value)
+                                setIsLoggedIn(value)
+                            }}></RegisterScreen>}
+                        </Stack.Screen>
                         <Stack.Screen name="Login">
                             {props => <LoginScreen {...props} setIsLoggedIn={(value) => {
-                                console.log("Set LoggedIn to " + value)
+                                console.log("Set LoggedIn Login to " + value)
                                 setIsLoggedIn(value)
                             }}></LoginScreen>}
                         </Stack.Screen>

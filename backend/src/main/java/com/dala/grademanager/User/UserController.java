@@ -26,22 +26,28 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable("id") UUID id) {
+    public User getUserById(@PathVariable("id") String id) {
         return userService.getUserById(id);
     }
 
     @GetMapping("/email/{email}")
-    public User getUser(@PathVariable("email") String email) {
+    public User getUserByEmail(@PathVariable("email") String email) {
         return userService.getUserByEmail(email);
     }
 
     @PostMapping("/security/register")
     public User saveUser(@RequestBody User user) throws LoginException {
+
+        System.out.println("Got register request with payload of " + user.toString());
+
         return userService.saveUser(user);
     }
 
     @PostMapping("/security/login")
     public User loginUser(@RequestBody User user) throws LoginException {
+
+        System.out.println("Got login request with payload of " + user.toString());
+
         return userService.loginUser(user);
     }
 
