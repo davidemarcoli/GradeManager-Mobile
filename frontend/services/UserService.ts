@@ -13,25 +13,25 @@ export function register(user: User) {
     });
 }
 
-export function login(email: string, password: string) {
+export function login(user: User) {
     return fetch('http://10.0.2.2:8080/api/users/security/login', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email: email, password: password})
+        body: JSON.stringify(user)
     });
 }
 
-export function plainLogin(email: string, password: string) {
+export function plainLogin(user: User) {
     return fetch('http://10.0.2.2:8080/api/users/security/plainLogin', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email: email, password: password})
+        body: JSON.stringify(user)
     });
 }
 

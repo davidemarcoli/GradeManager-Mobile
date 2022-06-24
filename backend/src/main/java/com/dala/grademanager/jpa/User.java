@@ -1,9 +1,6 @@
 package com.dala.grademanager.jpa;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -15,27 +12,24 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(updatable = false, nullable = false)
-    private UUID id;
+    private String id;
     private String name;
     private String email;
     private String password;
+    private String profilePictureUrl;
 
     @PrePersist
     public void prePersist() {
-        /*if (id == null) {
-            id = UUID.randomUUID();
-        }*/
+        if (id == null) {
+            id = UUID.randomUUID().toString();
+        }
         // encrypt password
-        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        if (password != null)
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
 /*
         password = passwordEncoder.encode(password);
 */
