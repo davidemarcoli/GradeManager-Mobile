@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from "react";
 import TextField from "../atoms/TextField";
-import {StyleSheet, View} from "react-native";
+import {LogBox, StyleSheet, View, YellowBox} from "react-native";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
 import {Text, useTheme} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
-import {getUser, login, plainLogin, storeUser} from "../../services/UserService";
+import {getUser, login, plainLogin, register, storeUser} from "../../services/UserService";
 import {User} from "../../models/User";
 import CustomSnackbar from "../atoms/CustomSnackbar";
+import * as Google from "expo-auth-session/providers/google";
+
+LogBox.ignoreLogs(['EventEmitter.removeListener(\'url\', ...): Method has been deprecated.']);
+
 
 type LoginScreenProps = {
     setIsLoggedIn: (value: boolean) => void
@@ -28,6 +32,7 @@ export default function LoginScreen({setIsLoggedIn}: LoginScreenProps) {
 
     useEffect(() => {
         if (error) {
+            console.log("Set Snackbar to ", !isSnackbarVisible)
             onToggleSnackBar();
         }
     }, [error]);
@@ -43,7 +48,7 @@ export default function LoginScreen({setIsLoggedIn}: LoginScreenProps) {
 
             const savedUser = value as User;
 
-            plainLogin(savedUser.email, savedUser.password)
+            plainLogin(new User(undefined, savedUser.email, savedUser.password, undefined, undefined))
                 .then((response) => {
                     if (response.ok) {
                         response.json().then(data => {
@@ -71,7 +76,7 @@ export default function LoginScreen({setIsLoggedIn}: LoginScreenProps) {
 
     function requestLogin() {
         console.log(data);
-        login(data.email, data.password)
+        login(new User(undefined, data.email, data.password, undefined, undefined))
             .then((response) => {
                 if (response.ok) {
                     response.json().then(value => {
@@ -81,7 +86,6 @@ export default function LoginScreen({setIsLoggedIn}: LoginScreenProps) {
                     })
                 } else {
                     response.text().then((text) => {
-                        // console.error(text)
                         setIsLoggedIn(false)
                         setError(text);
                     });
@@ -95,8 +99,76 @@ export default function LoginScreen({setIsLoggedIn}: LoginScreenProps) {
             });
     }
 
+    const [accessToken, setAccessToken] = useState<string>()
+    const [userInfo, setUserInfo] = useState()
+
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        expoClientId: '640691326507-p14892apsmo3ibdpd43h68a9d4v5178v.apps.googleusercontent.com',
+        webClientId: '640691326507-p14892apsmo3ibdpd43h68a9d4v5178v.apps.googleusercontent.com',
+    });
+
+    useEffect(() => {
+        console.log("The Google Response Type is ", response?.type)
+        console.log("The response is ", response)
+        if (response?.type === "success") {
+            setAccessToken(response.authentication?.accessToken)
+        }
+    }, [response])
+
+    useEffect(() => {
+        if (accessToken) getUserData();
+    }, [accessToken])
+
+    useEffect(() => {
+        console.log(JSON.stringify(userInfo))
+
+        if (!userInfo) return
+
+        // @ts-ignore
+        login(new User(userInfo.id, userInfo.email, undefined, userInfo.name, userInfo.picture)).then((response) => {
+
+            console.log("Google Login Response of Backend: ", JSON.stringify(response))
+
+            if (response.ok) {
+                // console.log(JSON.stringify(response))
+
+                response.json().then(value => {
+                    storeUser(value as User)
+                    setIsLoggedIn(true)
+                    navigation.navigate("Exams");
+                })
+
+
+            } else {
+                response.text().then(text => {
+                    setError(text);
+                    setIsLoggedIn(false)
+                })
+            }
+        }).catch(error => {
+            setIsLoggedIn(false)
+            console.error(error);
+
+        })}, [userInfo])
+
+    async function getUserData() {
+        let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+
+        userInfoResponse.json().then(value => {
+            setUserInfo(value)
+        })
+    }
+
     function loginWithGoogle() {
-        console.log(data);
+        promptAsync().then(value => {
+            //console.log("Value", value)
+            // console.log("-----")
+            // console.log(response)
+        })
     }
 
     const theme = useTheme();
@@ -169,7 +241,7 @@ export default function LoginScreen({setIsLoggedIn}: LoginScreenProps) {
                 height={50}
                 borderRadius={5}
                 onPress={() => {
-                    requestLogin();
+                    loginWithGoogle();
                 }}
                 icon={{name: "google", size: "extraLarge", color: theme.colors.text}}
                 backgroundColor={theme.colors.navbarBackground}

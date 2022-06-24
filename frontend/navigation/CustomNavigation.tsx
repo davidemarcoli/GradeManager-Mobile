@@ -57,10 +57,15 @@ export default function CustomNavigation({theme}: ThemeProps) {
                             headerShown: false,
                         }}
                     >
-                        <Stack.Screen name="Register" component={RegisterScreen}/>
+                        <Stack.Screen name="Register">
+                            {props => <RegisterScreen {...props} setIsLoggedIn={(value) => {
+                                console.log("Set LoggedIn from Register to " + value)
+                                setIsLoggedIn(value)
+                            }}></RegisterScreen>}
+                        </Stack.Screen>
                         <Stack.Screen name="Login">
                             {props => <LoginScreen {...props} setIsLoggedIn={(value) => {
-                                console.log("Set LoggedIn to " + value)
+                                console.log("Set LoggedIn Login to " + value)
                                 setIsLoggedIn(value)
                             }}></LoginScreen>}
                         </Stack.Screen>

@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface UserService {
     List<User> getAllUsers();
 
-    User getUserById(UUID id);
+    User getUserById(String id);
 
     User getUserByEmail(String email);
 

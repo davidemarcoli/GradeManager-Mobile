@@ -1,9 +1,6 @@
 package com.dala.grademanager.jpa;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -15,10 +12,10 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User {
 
     @Id
-    @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(50)")
     private String id;
     private String name;
     private String email;

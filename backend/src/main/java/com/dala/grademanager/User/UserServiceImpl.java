@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(UUID id) {
+    public User getUserById(String id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -45,10 +45,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loginUser(User user) throws LoginException {
-        User userFromDb = userRepository.findUserByEmail(user.getEmail()).orElse(null);
-        if (userFromDb == null) {
-            throw new LoginException(HttpStatus.NOT_FOUND, "User with email " + user.getEmail() + " does not exist. Please register!");
+
+        User userFromDb;
+
+        if (user.getId() == null) {
+            userFromDb = userRepository.findUserByEmail(user.getEmail()).orElse(null);
+        } else {
+            userFromDb = userRepository.findById(user.getId()).orElse(null);
         }
+
+        // if user wasn't found with email or id
+        if (userFromDb == null) throw new LoginException(HttpStatus.NOT_FOUND, "User with email " + user.getEmail() + " does not exist. Please register!");
+        // Then the user is a google user
+        if (user.getPassword() == null && userFromDb.getPassword() == null) return userFromDb;
+        // if the user is google user, but wanted to log in with normal login
+        if (userFromDb.getPassword() == null) throw new LoginException(HttpStatus.NOT_FOUND, "User not found!");
+
         if (!BCrypt.checkpw(user.getPassword(), userFromDb.getPassword())) {
             throw new LoginException(HttpStatus.FORBIDDEN, "Wrong password. Please try again!");
         }
@@ -58,11 +70,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User validateUserLogin(User user) throws LoginException {
-        User userFromDb = userRepository.findUserByEmail(user.getEmail()).orElse(null);
+        User userFromDb;
+
+        if (user.getId() == null) {
+            userFromDb = userRepository.findUserByEmail(user.getEmail()).orElse(null);
+        } else {
+            userFromDb = userRepository.findById(user.getId()).orElse(null);
+        }
+
         if (userFromDb == null) {
             throw new LoginException(HttpStatus.NOT_FOUND, "User with email " + user.getEmail() + " does not exist. Please register!");
         }
-        if (!Objects.equals(user.getPassword(), userFromDb.getPassword())) {
+
+        if (user.getPassword() == null && userFromDb.getPassword() == null) {
+            return userFromDb;
+        }
+
+        if (!BCrypt.checkpw(user.getPassword(), userFromDb.getPassword())) {
             throw new LoginException(HttpStatus.FORBIDDEN, "Wrong password. Please try again!");
         }
 
