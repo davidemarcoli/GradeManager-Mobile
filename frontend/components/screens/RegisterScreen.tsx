@@ -199,6 +199,7 @@ export default function RegisterScreen({ setIsLoggedIn }: RegisterScreenProps) {
         }}
         icon={{ name: "google", size: "extraLarge", color: theme.colors.text }}
         backgroundColor={theme.colors.navbarBackground}
+        border={{ color: theme.colors.navbarBackground, width: 1 }}
       ></IconButton>
 
       <TextField
@@ -261,6 +262,7 @@ export default function RegisterScreen({ setIsLoggedIn }: RegisterScreenProps) {
         }}
         text={{ text: "Register", weight: "bold" }}
         backgroundColor={theme.colors.accent}
+        border={{ color: theme.colors.accent, width: 1 }}
       ></IconButton>
 
       <View
