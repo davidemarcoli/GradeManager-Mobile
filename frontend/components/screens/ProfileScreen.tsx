@@ -42,7 +42,7 @@ export default function ProfileScreen({ setIsLoggedIn }: ProfileScreenProps) {
             }}
             text={{ text: "LOGOUT", size: 20, weight: "bold", color: "white" }}
             backgroundColor={"#8D0000"}
-            borderRadius={10}
+            borderRadius={15}
             border={{ color: "#8D0000", width: 1 }}
             height={50}
           ></IconButton>
