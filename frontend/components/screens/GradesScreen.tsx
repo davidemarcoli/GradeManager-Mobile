@@ -4,6 +4,8 @@ import TextField from "../atoms/TextField";
 import { Avatar, Button, Card, Title, useTheme } from "react-native-paper";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
+import { saveGrade } from "../../services/GradeService";
+import { Grade } from "../../models/Grades";
 
 export default function GradesScreen() {
   const [data, setData] = React.useState({
@@ -17,6 +19,17 @@ export default function GradesScreen() {
 
   function addGrade() {
     console.log(data);
+
+    saveGrade(
+      new Grade(
+        undefined,
+        data.gradename,
+        Number(data.grade),
+        data.subject,
+        data.school
+      )
+    );
+    console.log("Grade added");
   }
 
   return (
@@ -26,16 +39,6 @@ export default function GradesScreen() {
         justifyContent: "center",
         marginLeft: 40,
         marginRight: 40,
-
-        // borderWidth: 1,
-        // borderRadius: 5,
-        // borderColor: "#ddd",
-        // borderBottomWidth: 0,
-        // shadowColor: "#000000",
-        // shadowOffset: { width: 0, height: 2 },
-        // shadowOpacity: 0.9,
-        // shadowRadius: 3,
-        // elevation: 3,
       }}
     >
       <TextInputField
