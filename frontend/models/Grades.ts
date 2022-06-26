@@ -1,10 +1,12 @@
+import {User} from "./User";
+
 export class Grade {
   id: string | undefined;
   name: string;
   grade: number;
   subject: string;
   school: string;
-  userEmail: string;
+  user: User | undefined;
 
   constructor(
     id: string | undefined,
@@ -12,13 +14,13 @@ export class Grade {
     grade: number,
     subject: string,
     school: string,
-    userEmail: string
+    user: User | undefined
   ) {
     this.id = id;
     this.name = name;
     this.grade = grade;
     this.subject = subject;
     this.school = school;
-    this.userEmail = userEmail;
+    this.user = user;
   }
 }
