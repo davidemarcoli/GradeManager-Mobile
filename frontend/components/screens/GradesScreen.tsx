@@ -7,6 +7,14 @@ import IconButton from "../atoms/IconButton";
 import { saveGrade } from "../../services/GradeService";
 import { Grade } from "../../models/Grades";
 import { getUser } from "../../services/UserService";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+    grade: yup.number().required().min(1).max(6),
+    gradename: yup.string().required(),
+    subject: yup.string().required(),
+    school: yup.string().required(),
+});
 
 export default function GradesScreen() {
   const [data, setData] = React.useState({
@@ -21,27 +29,28 @@ export default function GradesScreen() {
   async function addGrade() {
     console.log(data);
 
-    try {
-      saveGrade(
-        new Grade(
-          undefined,
-          data.gradename,
-          Number(data.grade),
-          data.subject,
-          data.school,
-          await getEmail()
-        )
-      );
-    } catch (e: unknown) {
-      if (e instanceof Error) console.log(e);
-    }
-    console.log("Grade added");
-  }
+    schema.validate(data).then(() => {
+        try {
+            saveGrade(
+                new Grade(
+                    undefined,
+                    data.gradename,
+                    Number(data.grade),
+                    data.subject,
+                    data.school,
+                    undefined
+                )
+            );
+        } catch (e: unknown) {
+            if (e instanceof Error) console.log(e);
+        }
+        console.log("Grade added");
+      })
+        .catch(() => {
+            console.error("Grade not valid")
+        })
 
-  const getEmail = async () => {
-    const user = await getUser();
-    return user!.email;
-  };
+  }
 
   return (
     <View
