@@ -46,8 +46,9 @@ export default function GradesScreen() {
         }
         console.log("Grade added");
       })
-        .catch(() => {
-            console.error("Grade not valid")
+        .catch((error: any) => {
+            console.log(error)
+            console.error(error)
         })
 
   }
