@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface GradeRepository extends JpaRepository<Grade, String> {
-    @Query("select g from grades g where g.id = ?1")
+    //@Query("select g from grades g where g.id = ?1")
+    //Optional<Grade> findGradeById(String id);
+
     Optional<Grade> findGradeById(String id);
 }

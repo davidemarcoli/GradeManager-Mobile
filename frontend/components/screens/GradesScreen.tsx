@@ -6,6 +6,7 @@ import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
 import { saveGrade } from "../../services/GradeService";
 import { Grade } from "../../models/Grades";
+import { getUser } from "../../services/UserService";
 
 export default function GradesScreen() {
   const [data, setData] = React.useState({
@@ -17,20 +18,30 @@ export default function GradesScreen() {
 
   const theme = useTheme();
 
-  function addGrade() {
+  async function addGrade() {
     console.log(data);
 
-    saveGrade(
-      new Grade(
-        undefined,
-        data.gradename,
-        Number(data.grade),
-        data.subject,
-        data.school
-      )
-    );
+    try {
+      saveGrade(
+        new Grade(
+          undefined,
+          data.gradename,
+          Number(data.grade),
+          data.subject,
+          data.school,
+          await getEmail()
+        )
+      );
+    } catch (e: unknown) {
+      if (e instanceof Error) console.log(e);
+    }
     console.log("Grade added");
   }
+
+  const getEmail = async () => {
+    const user = await getUser();
+    return user!.email;
+  };
 
   return (
     <View

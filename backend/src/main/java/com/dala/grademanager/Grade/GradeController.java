@@ -27,7 +27,6 @@ public class GradeController {
     @PostMapping("/persistence/addgrade")
     public Grade saveGrade(@RequestBody Grade grade) throws LoginException {
         System.out.println("Got add grade request with payload of " + grade.toString());
-
         return gradeService.saveGrade(grade);
     }
 }
