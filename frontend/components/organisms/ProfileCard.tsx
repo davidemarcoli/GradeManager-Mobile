@@ -8,7 +8,7 @@ import {useTheme} from "react-native-paper";
 import {User} from "../../models/User";
 import {getUser} from "../../services/UserService";
 import {NavigationActions} from "react-navigation";
-import {useNavigation} from "@react-navigation/native";
+import {useIsFocused, useNavigation} from "@react-navigation/native";
 
 type ProfileCardProps = {
     user: User;
@@ -20,6 +20,12 @@ export default function ProfileCard() {
     const navigation = useNavigation()
 
     const [user, setUser] = useState<User>()
+
+    const isFocused = useIsFocused()
+
+    useEffect(() => {
+        updateUser()
+    } , [isFocused])
 
     useEffect(() => {
         updateUser()
