@@ -24,4 +24,9 @@ public class GradeServiceImpl implements GradeService {
     public Grade saveGrade(Grade grade) {
         return gradeRepository.save(grade);
     }
+
+    @Override
+    public List<Grade> getGradesByUserID(String userId) {
+        return gradeRepository.getGradesByUserID(userId);
+    }
 }

@@ -10,4 +10,6 @@ public interface GradeService {
     Grade getGradeByID(String id);
 
     Grade saveGrade(Grade grade);
+
+    List<Grade> getGradesByUserID(String userId);
 }

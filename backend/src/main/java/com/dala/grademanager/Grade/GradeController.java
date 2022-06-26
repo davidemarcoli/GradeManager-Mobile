@@ -24,6 +24,11 @@ public class GradeController {
         return gradeService.getGradeByID(id);
     }
 
+    @GetMapping("/user/{id}")
+    public List<Grade> getGradesByUserID(@PathVariable("id") String userId) {
+        return gradeService.getGradesByUserID(userId);
+    }
+
     @PostMapping("/persistence/addgrade")
     public Grade saveGrade(@RequestBody Grade grade) throws LoginException {
         System.out.println("Got add grade request with payload of " + grade.toString());

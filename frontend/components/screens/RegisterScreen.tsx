@@ -290,9 +290,3 @@ export default function RegisterScreen({ setIsLoggedIn }: RegisterScreenProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  space: {
-    marginBottom: 10,
-  },
-});

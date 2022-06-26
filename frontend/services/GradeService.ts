@@ -1,9 +1,8 @@
 import { Grade } from "../models/Grades";
-import {getUser} from "./UserService";
+import { getUser } from "./UserService";
 
 export function saveGrade(grade: Grade) {
-  getUser().then(value => {
-
+  getUser().then((value) => {
     grade.user = value;
 
     return fetch("http://10.0.2.2:8080/api/grades/persistence/addgrade", {
@@ -14,7 +13,7 @@ export function saveGrade(grade: Grade) {
       },
       body: JSON.stringify(grade),
     });
-  })
+  });
 }
 
 export function getGrade(grade: Grade) {
@@ -27,3 +26,33 @@ export function getGrade(grade: Grade) {
     body: JSON.stringify(grade),
   });
 }
+
+export const getGradesByUserID = async () => {
+  const user = await getUser();
+  if (user) {
+    const userId = user.id;
+    return fetch(`http://10.0.2.2:8080/api/grades/user/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+  }
+};
+
+/*
+export function getGradesByUserID() {
+  getUser().then((value) => {
+    const userId = value!.id;
+    return fetch(`http://10.0.2.2:8080/api/grades/user/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userId),
+    });
+  });
+}
+*/
