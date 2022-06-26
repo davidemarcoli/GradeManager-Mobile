@@ -15,4 +15,6 @@ public interface GradeRepository extends JpaRepository<Grade, String> {
 
     @Query("SELECT g FROM grades g where g.user.id = ?1")
     List<Grade> getGradesByUserID(String userId);
+
+    List<Grade> findByUser_Id(String id);
 }

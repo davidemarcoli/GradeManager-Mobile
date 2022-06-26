@@ -27,6 +27,6 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public List<Grade> getGradesByUserID(String userId) {
-        return gradeRepository.getGradesByUserID(userId);
+        return gradeRepository.findByUser_Id(userId);
     }
 }

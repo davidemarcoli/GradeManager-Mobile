@@ -19,15 +19,15 @@ const getUserId = async () => {
   return user!.id;
 };*/
 
-export default function App() {
+export default function GoalsScreen() {
   const [grades, setGrades] = React.useState<Grade[]>([]);
 
   // add all fetched grades to the state
   useEffect(() => {
-    getGradesByUserID().then((value) => {
-      if (value) {
-        setGrades(value as unknown as SetStateAction<Grade[]>);
-      }
+    getGradesByUserID().then((response) => {
+      response!.json().then(value => {
+        setGrades(value)
+      })
     });
   }, []);
 
@@ -36,16 +36,14 @@ export default function App() {
       style={{
         flex: 1,
         justifyContent: "center",
-        marginLeft: 40,
-        marginRight: 40,
       }}
     >
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title>Grade</DataTable.Title>
-          <DataTable.Title>Grade name</DataTable.Title>
-          <DataTable.Title>Subject</DataTable.Title>
-          <DataTable.Title>School</DataTable.Title>
+          <DataTable.Title style={{flex: 2}}>Grade</DataTable.Title>
+          <DataTable.Title style={{flex: 4}}>Grade name</DataTable.Title>
+          <DataTable.Title style={{flex: 4}}>Subject</DataTable.Title>
+          <DataTable.Title style={{flex: 2}}>School</DataTable.Title>
         </DataTable.Header>
         {
           grades.map(grade => {
@@ -56,10 +54,10 @@ export default function App() {
                   console.log(`selected account ${grade.id}`)
                 }}
               >
-                <DataTable.Cell>{grade.grade}</DataTable.Cell>
-                <DataTable.Cell>{grade.name}</DataTable.Cell>
-                <DataTable.Cell>{grade.subject}</DataTable.Cell>
-                <DataTable.Cell>{grade.school}</DataTable.Cell>
+                <DataTable.Cell style={{flex: 2}}>{grade.grade}</DataTable.Cell>
+                <DataTable.Cell style={{flex: 4}}>{grade.name}</DataTable.Cell>
+                <DataTable.Cell style={{flex: 4}}>{grade.subject}</DataTable.Cell>
+                <DataTable.Cell style={{flex: 2}}>{grade.school}</DataTable.Cell>
               </DataTable.Row>
           )})}
           </DataTable>
