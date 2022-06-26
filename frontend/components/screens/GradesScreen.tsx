@@ -4,6 +4,17 @@ import TextField from "../atoms/TextField";
 import { Avatar, Button, Card, Title, useTheme } from "react-native-paper";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
+import { saveGrade } from "../../services/GradeService";
+import { Grade } from "../../models/Grades";
+import { getUser } from "../../services/UserService";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+    grade: yup.number().required().min(1).max(6),
+    gradename: yup.string().required(),
+    subject: yup.string().required(),
+    school: yup.string().required(),
+});
 
 export default function GradesScreen() {
   const [data, setData] = React.useState({
@@ -15,8 +26,31 @@ export default function GradesScreen() {
 
   const theme = useTheme();
 
-  function addGrade() {
+  async function addGrade() {
     console.log(data);
+
+    schema.validate(data).then(() => {
+        try {
+            saveGrade(
+                new Grade(
+                    undefined,
+                    data.gradename,
+                    Number(data.grade),
+                    data.subject,
+                    data.school,
+                    undefined
+                )
+            );
+        } catch (e: unknown) {
+            if (e instanceof Error) console.log(e);
+        }
+        console.log("Grade added");
+      })
+        .catch((error: any) => {
+            console.log(error)
+            console.error(error)
+        })
+
   }
 
   return (
@@ -26,16 +60,6 @@ export default function GradesScreen() {
         justifyContent: "center",
         marginLeft: 40,
         marginRight: 40,
-
-        // borderWidth: 1,
-        // borderRadius: 5,
-        // borderColor: "#ddd",
-        // borderBottomWidth: 0,
-        // shadowColor: "#000000",
-        // shadowOffset: { width: 0, height: 2 },
-        // shadowOpacity: 0.9,
-        // shadowRadius: 3,
-        // elevation: 3,
       }}
     >
       <TextInputField

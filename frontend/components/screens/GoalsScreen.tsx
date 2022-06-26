@@ -1,29 +1,30 @@
 import React from "react";
-import {View} from "react-native";
-import TextField from "../atoms/TextField";
-import TextInputField from "../atoms/TextInputField";
+import { View, StyleSheet } from "react-native";
+import { DataTable } from "react-native-paper";
 
-export default function GoalsScreen() {
-    const [data, setData] = React.useState({
-        username: "",
-        password: "",
-    });
-    return (
-        <View style={{flex: 1, justifyContent: "center"}}>
-            <TextField text={"Goals"}></TextField>
-            <TextInputField
-                label={"Password"}
-                secureTextEntry={true}
-                defaultValue={data.password}
-                onChangeText={(value: string) =>
-                    setData({
-                        ...data,
-                        password: value,
-                    })
-                }
-                marginTop={20}
-                icon={{}}
-            ></TextInputField>
-        </View>
-    );
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>Name</DataTable.Title>
+          <DataTable.Title>Email</DataTable.Title>
+          <DataTable.Title numeric>Age</DataTable.Title>
+        </DataTable.Header>
+
+        <DataTable.Row>
+          <DataTable.Cell>John</DataTable.Cell>
+          <DataTable.Cell>john@kindacode.com</DataTable.Cell>
+          <DataTable.Cell numeric>33</DataTable.Cell>
+        </DataTable.Row>
+      </DataTable>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 100,
+    paddingHorizontal: 30,
+  },
+});
