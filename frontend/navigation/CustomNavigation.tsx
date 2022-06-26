@@ -12,6 +12,7 @@ import SettingsScreen from "../components/screens/SettingsScreen";
 import RegisterScreen from "../components/screens/RegisterScreen";
 import ProfileScreen from "../components/screens/ProfileScreen";
 import {doesUserExist} from "../services/UserService";
+import EditProfilePictureScreen from "../components/screens/EditProfilePictureScreen";
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -79,6 +80,7 @@ export default function CustomNavigation({theme}: ThemeProps) {
                             }}></ProfileScreen>}
                         </Stack.Screen>
                         <Stack.Screen name="Settings" component={SettingsScreen}/>
+                        <Stack.Screen name="EditProfilePicture" component={EditProfilePictureScreen}/>
                     </Stack.Navigator>
                 </View>
                 {isLoggedIn && <Navbar

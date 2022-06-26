@@ -92,4 +92,14 @@ public class UserServiceImpl implements UserService {
 
         return userFromDb;
     }
+
+    @Override
+    public User editUser(User user) {
+        if (userRepository.existsById(user.getId())) {
+            System.out.println("It exists");
+            return this.userRepository.save(user);
+        } else {
+            return null;
+        }
+    }
 }

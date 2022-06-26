@@ -1,4 +1,4 @@
-import {Image, StyleSheet, TouchableOpacity, View} from "react-native";
+import {Image, Pressable, StyleSheet, TouchableOpacity, View} from "react-native";
 import * as Linking from 'expo-linking';
 import TextField from "../atoms/TextField";
 import IconButton from "../atoms/IconButton";
@@ -22,24 +22,32 @@ export default function ProfileCard() {
     const [user, setUser] = useState<User>()
 
     useEffect(() => {
+        updateUser()
+    }, [])
+
+    function updateUser() {
         getUser().then(value => {
             if (value) {
                 setUser(value)
             }
         })
-    }, [])
+    }
 
     if (!user) return <View></View>
 
     return (
         <>
         <CustomCard borderRadius={15}>
+            <Pressable onPress={updateUser}>
             {!user.profilePictureUrl &&
                 <Image style={{width: 100, height: 100, borderRadius: 50, alignSelf: "center", marginTop: -50}}
-                       source={require("../../assets/images/bitmoji.png")}></Image>}
+                       source={require("../../assets/images/pp_not_found.png")}></Image>}
             {user.profilePictureUrl &&
                 <Image style={{width: 100, height: 100, borderRadius: 50, alignSelf: "center", marginTop: -50}}
                        source={{uri: user.profilePictureUrl}}></Image>}
+            </Pressable>
+
+
             <TextField marginTop={10} text={user.name} textSize={20} fontWeight={"bold"}></TextField>
 
             <TouchableOpacity onPress={() => {
