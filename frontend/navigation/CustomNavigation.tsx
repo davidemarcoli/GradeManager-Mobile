@@ -84,6 +84,7 @@ export default function CustomNavigation({ theme }: ThemeProps) {
                         <Stack.Screen name="Goals" component={GoalsScreen}/>
                         <Stack.Screen name="GradesScreen" component={GradesScreen} />
                         <Stack.Screen name="Grades" component={GradesOverviewScreen} />
+                        <Stack.Screen name="Analytics" component={AnalyticsScreen} />
                         <Stack.Screen name="Profile">
                             {props => <ProfileScreen {...props} setIsLoggedIn={(value) => {
                                 console.log("Set LoggedIn to " + value)
