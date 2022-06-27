@@ -16,14 +16,13 @@ export function saveGrade(grade: Grade) {
   });
 }
 
-export function getGrade(grade: Grade) {
-  return fetch("http://10.0.2.2:8080/api/grades/", {
+export function getGradeByID(gradeId: string) {
+  return fetch(`http://10.0.2.2:8080/api/grades/${gradeId}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(grade),
   });
 }
 

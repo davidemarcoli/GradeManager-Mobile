@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Modal } from "react-native";
-import { DataTable, useTheme } from "react-native-paper";
+import { View, Text, StyleSheet, Modal } from "react-native";
+import { DataTable, Title, useTheme } from "react-native-paper";
 import { Grade } from "../../models/Grades";
-import { getGradesByUserID } from "../../services/GradeService";
+import { getGradeByID, getGradesByUserID } from "../../services/GradeService";
 import IconButton from "../atoms/IconButton";
 import TextInputField from "../atoms/TextInputField";
 import { useNavigation } from "@react-navigation/native";
@@ -12,7 +12,6 @@ export default function GradesOverviewScreen() {
   const [grades, setGrades] = React.useState<Grade[]>([]);
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedGradeId, setSelectedGradeId] = React.useState({ gradeId: "" });
   const [data, setData] = React.useState({
     grade: "",
     gradename: "",
@@ -20,7 +19,7 @@ export default function GradesOverviewScreen() {
     school: "",
   });
 
-  // add all fetched grades to the state
+  // add all fetched grades to the state. Add a value to the watchlist, so it gets updated as soon as some data about the grade changes.
   useEffect(() => {
     getGradesByUserID().then((response) => {
       response!.json().then((value) => {
@@ -47,6 +46,7 @@ export default function GradesOverviewScreen() {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
+              <Title style={styles.title}>Edit</Title>
               <View style={styles.backBtn}>
                 <IconButton
                   onPress={() => {
@@ -60,116 +60,117 @@ export default function GradesOverviewScreen() {
                   }}
                 ></IconButton>
               </View>
-
-              <TextInputField
-                label={"Grade"}
-                defaultValue={data.grade}
-                onChangeText={(value: string) =>
-                  setData({
-                    ...data,
-                    grade: value,
-                  })
-                }
-                marginTop={20}
-                mainIcon={{
-                  name: "numeric",
-                  size: "medium",
-                  color: theme.colors.text,
-                }}
-                subtext={{
-                  text: "ex: 4.5",
-                }}
-                numeric={true}
-              ></TextInputField>
-              <TextInputField
-                label={"Grade Name"}
-                defaultValue={data.gradename}
-                onChangeText={(value: string) =>
-                  setData({
-                    ...data,
-                    gradename: value,
-                  })
-                }
-                marginTop={20}
-                mainIcon={{
-                  name: "file-document-outline",
-                  size: "medium",
-                  color: theme.colors.text,
-                }}
-                subtext={{
-                  text: "ex: Trigonometry 2",
-                }}
-              ></TextInputField>
-              <TextInputField
-                label={"Subject"}
-                defaultValue={data.subject}
-                onChangeText={(value: string) =>
-                  setData({
-                    ...data,
-                    subject: value,
-                  })
-                }
-                marginTop={20}
-                mainIcon={{
-                  name: "book-outline",
-                  size: "medium",
-                  color: theme.colors.text,
-                }}
-                subtext={{
-                  text: "ex: Mathematics",
-                }}
-              ></TextInputField>
-              <TextInputField
-                label={"School"}
-                defaultValue={data.school}
-                onChangeText={(value: string) =>
-                  setData({
-                    ...data,
-                    school: value,
-                  })
-                }
-                marginTop={20}
-                mainIcon={{
-                  name: "school-outline",
-                  size: "medium",
-                  color: theme.colors.text,
-                }}
-                subtext={{
-                  text: "ex: BMS",
-                }}
-              ></TextInputField>
-
-              <View style={styles.modalBnt}>
-                <IconButton
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                  icon={{
-                    name: "check-circle-outline",
+              <View style={styles.editFields}>
+                <TextInputField
+                  label={"Grade"}
+                  defaultValue={data.grade}
+                  onChangeText={(value: string) =>
+                    setData({
+                      ...data,
+                      grade: value,
+                    })
+                  }
+                  marginTop={20}
+                  mainIcon={{
+                    name: "numeric",
                     size: "medium",
-                    iconType: "MaterialIcons",
                     color: theme.colors.text,
-                    opacity: 0.7,
                   }}
-                  backgroundColor={theme.colors.navbarBackground}
-                  sameRow={false}
-                  height={50}
-                ></IconButton>
-                <IconButton
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
+                  subtext={{
+                    text: "ex: 4.5",
                   }}
-                  icon={{
-                    name: "delete-outline",
+                  numeric={true}
+                ></TextInputField>
+                <TextInputField
+                  label={"Grade Name"}
+                  defaultValue={data.gradename}
+                  onChangeText={(value: string) =>
+                    setData({
+                      ...data,
+                      gradename: value,
+                    })
+                  }
+                  marginTop={20}
+                  mainIcon={{
+                    name: "file-document-outline",
                     size: "medium",
-                    iconType: "MaterialIcons",
                     color: theme.colors.text,
-                    opacity: 0.7,
                   }}
-                  backgroundColor={theme.colors.navbarBackground}
-                  sameRow={false}
-                  height={50}
-                ></IconButton>
+                  subtext={{
+                    text: "ex: Trigonometry 2",
+                  }}
+                ></TextInputField>
+                <TextInputField
+                  label={"Subject"}
+                  defaultValue={data.subject}
+                  onChangeText={(value: string) =>
+                    setData({
+                      ...data,
+                      subject: value,
+                    })
+                  }
+                  marginTop={20}
+                  mainIcon={{
+                    name: "book-outline",
+                    size: "medium",
+                    color: theme.colors.text,
+                  }}
+                  subtext={{
+                    text: "ex: Mathematics",
+                  }}
+                ></TextInputField>
+                <TextInputField
+                  label={"School"}
+                  defaultValue={data.school}
+                  onChangeText={(value: string) =>
+                    setData({
+                      ...data,
+                      school: value,
+                    })
+                  }
+                  marginTop={20}
+                  mainIcon={{
+                    name: "school-outline",
+                    size: "medium",
+                    color: theme.colors.text,
+                  }}
+                  subtext={{
+                    text: "ex: BMS",
+                  }}
+                ></TextInputField>
+
+                <View style={styles.modalBnt}>
+                  <IconButton
+                    onPress={() => {
+                      setModalVisible(!modalVisible);
+                    }}
+                    icon={{
+                      name: "check-circle-outline",
+                      size: "medium",
+                      iconType: "MaterialIcons",
+                      color: theme.colors.text,
+                      opacity: 0.7,
+                    }}
+                    backgroundColor={theme.colors.navbarBackground}
+                    sameRow={false}
+                    height={50}
+                  ></IconButton>
+                  <IconButton
+                    onPress={() => {
+                      setModalVisible(!modalVisible);
+                    }}
+                    icon={{
+                      name: "delete-outline",
+                      size: "medium",
+                      iconType: "MaterialIcons",
+                      color: theme.colors.text,
+                      opacity: 0.7,
+                    }}
+                    backgroundColor={theme.colors.navbarBackground}
+                    sameRow={false}
+                    height={50}
+                  ></IconButton>
+                </View>
               </View>
             </View>
           </View>
@@ -189,9 +190,12 @@ export default function GradesOverviewScreen() {
                 onPress={() => {
                   console.log(`selected grade with id: ${grade.id}`);
                   setModalVisible(!modalVisible);
-                  setSelectedGradeId({
-                    ...selectedGradeId,
-                    gradeId: grade.id!,
+                  setData({
+                    ...data,
+                    grade: grade.grade.toString(),
+                    gradename: grade.name,
+                    subject: grade.subject,
+                    school: grade.school,
                   });
                 }}
               >
@@ -269,5 +273,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "3%",
     left: "10%",
+  },
+  title: {
+    left: "50%",
+    position: "absolute",
+    top: "3%",
+  },
+  editFields: {
+    marginTop: "10%",
   },
 });
