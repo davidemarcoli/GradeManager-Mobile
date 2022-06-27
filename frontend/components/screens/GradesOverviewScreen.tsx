@@ -46,7 +46,16 @@ export default function GradesOverviewScreen() {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Title style={styles.title}>Edit</Title>
+              <Title
+                style={{
+                  color: theme.colors.text,
+                  left: "50%",
+                  position: "absolute",
+                  top: "3%",
+                }}
+              >
+                Edit
+              </Title>
               <View style={styles.backBtn}>
                 <IconButton
                   onPress={() => {
@@ -148,10 +157,13 @@ export default function GradesOverviewScreen() {
                       name: "check-circle-outline",
                       size: "medium",
                       iconType: "MaterialIcons",
-                      color: theme.colors.text,
-                      opacity: 0.7,
+                      color: "white",
                     }}
-                    backgroundColor={theme.colors.navbarBackground}
+                    backgroundColor="orange"
+                    border={{
+                      width: 1,
+                      color: "orange",
+                    }}
                     sameRow={false}
                     height={50}
                   ></IconButton>
@@ -163,10 +175,13 @@ export default function GradesOverviewScreen() {
                       name: "delete-outline",
                       size: "medium",
                       iconType: "MaterialIcons",
-                      color: theme.colors.text,
-                      opacity: 0.7,
+                      color: "orange",
                     }}
-                    backgroundColor={theme.colors.navbarBackground}
+                    backgroundColor="white"
+                    border={{
+                      width: 1,
+                      color: "orange",
+                    }}
                     sameRow={false}
                     height={50}
                   ></IconButton>
@@ -273,11 +288,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "3%",
     left: "10%",
-  },
-  title: {
-    left: "50%",
-    position: "absolute",
-    top: "3%",
   },
   editFields: {
     marginTop: "10%",

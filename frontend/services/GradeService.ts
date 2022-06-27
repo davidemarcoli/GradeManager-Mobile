@@ -40,6 +40,8 @@ export const getGradesByUserID = async () => {
   }
 };
 
+export function deleteGradeByID() {}
+
 /*
 export function getGradesByUserID() {
   getUser().then((value) => {
