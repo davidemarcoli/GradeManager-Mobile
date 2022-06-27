@@ -11,15 +11,14 @@ import {NavigationActions} from "react-navigation";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
 
 type ProfileCardProps = {
-    user: User;
-}
+  user: User;
+};
 
 export default function ProfileCard() {
+  const theme = useTheme();
+  const navigation = useNavigation();
 
-    const theme = useTheme();
-    const navigation = useNavigation()
-
-    const [user, setUser] = useState<User>()
+  const [user, setUser] = useState<User>();
 
     const isFocused = useIsFocused()
 
@@ -39,7 +38,7 @@ export default function ProfileCard() {
         })
     }
 
-    if (!user) return <View></View>
+  if (!user) return <View></View>;
 
     return (
         <>
@@ -56,49 +55,93 @@ export default function ProfileCard() {
 
             <TextField marginTop={10} text={user.name} textSize={20} fontWeight={"bold"}></TextField>
 
-            <TouchableOpacity onPress={() => {
-                Linking.openURL("mailto:" + user.email)
-            }}>
-                <TextField marginTop={5} text={user.email} opacity={0.75}
-                           textSize={15}></TextField>
-            </TouchableOpacity>
-            <View style={{
-                borderBottomColor: theme.colors.text,
-                borderBottomWidth: 2,
-                width: "75%",
-                alignSelf: "center",
-                marginTop: 10,
-                opacity: 0.25
-            }}></View>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL("mailto:" + user.email);
+          }}
+        >
+          <TextField
+            marginTop={5}
+            text={user.email}
+            opacity={0.75}
+            textSize={15}
+          ></TextField>
+        </TouchableOpacity>
+        <View
+          style={{
+            borderBottomColor: theme.colors.text,
+            borderBottomWidth: 2,
+            width: "75%",
+            alignSelf: "center",
+            marginTop: 10,
+            opacity: 0.25,
+          }}
+        ></View>
 
-            <View style={{flex: 1, flexDirection: "row", justifyContent: "space-evenly", alignItems: "center"}}>
-                <IconButton onPress={() => {
-                }} text={{text: "X Schools", color: theme.colors.text, size: 12, opacity: 0.7}} icon={{
-                    name: "corporate-fare",
-                    size: "medium",
-                    iconType: "MaterialIcons",
-                    color: theme.colors.text,
-                    opacity: 0.7
-                }} backgroundColor={theme.colors.navbarBackground} sameRow={false}></IconButton>
-                <IconButton onPress={() => {
-                }} text={{text: "X Subjects", color: theme.colors.text, size: 12, opacity: 0.7}} icon={{
-                    name: "menu-book",
-                    size: "medium",
-                    iconType: "MaterialIcons",
-                    color: theme.colors.text,
-                    opacity: 0.7
-                }} backgroundColor={theme.colors.navbarBackground} sameRow={false}></IconButton>
-                <IconButton onPress={() => {
-                }} text={{text: "XX Exams", color: theme.colors.text, size: 12, opacity: 0.7}} icon={{
-                    name: "file-document-edit",
-                    size: "medium",
-                    iconType: "MaterialCommunityIcons",
-                    color: theme.colors.text,
-                    opacity: 0.7
-                }} backgroundColor={theme.colors.navbarBackground} sameRow={false}></IconButton>
-
-            </View>
-        </CustomCard>
-        </>
-    )
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <IconButton
+            onPress={() => {}}
+            text={{
+              text: "X Schools",
+              color: theme.colors.text,
+              size: 12,
+              opacity: 0.7,
+            }}
+            icon={{
+              name: "corporate-fare",
+              size: "medium",
+              iconType: "MaterialIcons",
+              color: theme.colors.text,
+              opacity: 0.7,
+            }}
+            backgroundColor={theme.colors.navbarBackground}
+            sameRow={false}
+          ></IconButton>
+          <IconButton
+            onPress={() => {}}
+            text={{
+              text: "X Subjects",
+              color: theme.colors.text,
+              size: 12,
+              opacity: 0.7,
+            }}
+            icon={{
+              name: "menu-book",
+              size: "medium",
+              iconType: "MaterialIcons",
+              color: theme.colors.text,
+              opacity: 0.7,
+            }}
+            backgroundColor={theme.colors.navbarBackground}
+            sameRow={false}
+          ></IconButton>
+          <IconButton
+            onPress={() => {}}
+            text={{
+              text: "XX Exams",
+              color: theme.colors.text,
+              size: 12,
+              opacity: 0.7,
+            }}
+            icon={{
+              name: "file-document-edit",
+              size: "medium",
+              iconType: "MaterialCommunityIcons",
+              color: theme.colors.text,
+              opacity: 0.7,
+            }}
+            backgroundColor={theme.colors.navbarBackground}
+            sameRow={false}
+          ></IconButton>
+        </View>
+      </CustomCard>
+    </>
+  );
 }
