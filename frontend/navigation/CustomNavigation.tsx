@@ -15,6 +15,7 @@ import GradesScreen from "../components/screens/GradesScreen";
 import SettingsScreen from "../components/screens/SettingsScreen";
 import RegisterScreen from "../components/screens/RegisterScreen";
 import ProfileScreen from "../components/screens/ProfileScreen";
+import EditProfilePictureScreen from "../components/screens/EditProfilePictureScreen";
 import { doesUserExist } from "../services/UserService";
 import GradesOverviewScreen from "../components/screens/GradesOverviewScreen";
 import AnalyticsScreen from "../components/screens/AnalyticsScreen";
@@ -50,68 +51,57 @@ export default function CustomNavigation({ theme }: ThemeProps) {
     setIsLoggedIn(doesUserExist());
   }, []);
 
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <View style={{ backgroundColor: theme.colors.backgroundColor }}>
-        <View style={{ width: "100%", height: "100%" }}>
-          <Stack.Navigator
-            initialRouteName={"Login"}
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="Register">
-              {(props) => (
-                <RegisterScreen
-                  {...props}
-                  setIsLoggedIn={(value) => {
-                    console.log("Set LoggedIn from Register to " + value);
-                    setIsLoggedIn(value);
-                  }}
-                ></RegisterScreen>
-              )}
-            </Stack.Screen>
-            <Stack.Screen name="Login">
-              {(props) => (
-                <LoginScreen
-                  {...props}
-                  setIsLoggedIn={(value) => {
-                    console.log("Set LoggedIn Login to " + value);
-                    setIsLoggedIn(value);
-                  }}
-                ></LoginScreen>
-              )}
-            </Stack.Screen>
-            <Stack.Screen name="Exams" component={ExamsScreen} />
-            <Stack.Screen name="Goals" component={GoalsScreen} />
-            <Stack.Screen name="GradesScreen" component={GradesScreen} />
-            <Stack.Screen name="Grades" component={GradesOverviewScreen} />
-            <Stack.Screen name="Analytics" component={AnalyticsScreen} />
-            <Stack.Screen name="Profile">
-              {(props) => (
-                <ProfileScreen
-                  {...props}
-                  setIsLoggedIn={(value) => {
-                    console.log("Set LoggedIn to " + value);
-                    setIsLoggedIn(value);
-                  }}
-                ></ProfileScreen>
-              )}
-            </Stack.Screen>
-            <Stack.Screen name="Settings" component={SettingsScreen} />
-          </Stack.Navigator>
-        </View>
-        {isLoggedIn && (
-          <Navbar
-            elements={navbarElements}
-            activeColor={theme.colors.accent}
-            inactiveColor={"#99A0AC"}
-            backgroundColor={theme.colors.navbarBackground}
-          ></Navbar>
-        )}
-      </View>
-    );
-  }
+    useEffect(() => {
+        //console.log("Does User exist? ", doesUserExist())
+        setIsLoggedIn(doesUserExist())
+    }, [])
+
+    if (!isLoadingComplete) {
+        return null;
+    } else {
+        return (
+            <View style={{backgroundColor: theme.colors.backgroundColor}}>
+                <View style={{width: "100%", height: "100%"}}>
+                    <Stack.Navigator
+                        initialRouteName={"Login"}
+                        screenOptions={{
+                            headerShown: false,
+                        }}
+                    >
+                        <Stack.Screen name="Register">
+                            {props => <RegisterScreen {...props} setIsLoggedIn={(value) => {
+                                console.log("Set LoggedIn from Register to " + value)
+                                setIsLoggedIn(value)
+                            }}></RegisterScreen>}
+                        </Stack.Screen>
+                        <Stack.Screen name="Login">
+                            {props => <LoginScreen {...props} setIsLoggedIn={(value) => {
+                                console.log("Set LoggedIn Login to " + value)
+                                setIsLoggedIn(value)
+                            }}></LoginScreen>}
+                        </Stack.Screen>
+                        <Stack.Screen name="Exams" component={ExamsScreen}/>
+                        <Stack.Screen name="Goals" component={GoalsScreen}/>
+                        <Stack.Screen name="GradesScreen" component={GradesScreen} />
+                        <Stack.Screen name="Grades" component={GradesOverviewScreen} />
+                        <Stack.Screen name="Analytics" component={AnalyticsScreen} />
+                        <Stack.Screen name="Profile">
+                            {props => <ProfileScreen {...props} setIsLoggedIn={(value) => {
+                                console.log("Set LoggedIn to " + value)
+                                setIsLoggedIn(value)
+                            }}></ProfileScreen>}
+                        </Stack.Screen>
+                        <Stack.Screen name="Settings" component={SettingsScreen}/>
+                        <Stack.Screen name="EditProfilePicture" component={EditProfilePictureScreen}/>
+                    </Stack.Navigator>
+                </View>
+                {isLoggedIn && <Navbar
+                    elements={navbarElements}
+                    activeColor={theme.colors.accent}
+                    inactiveColor={"#99A0AC"}
+                    backgroundColor={theme.colors.navbarBackground}
+                ></Navbar>}
+            </View>
+        );
+    }
 }

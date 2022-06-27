@@ -34,7 +34,18 @@ export function plainLogin(user: User) {
   });
 }
 
-const storeKey = "@user";
+export function editUser(user: User) {
+    return fetch('http://10.0.2.2:8080/api/users/edit', {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    });
+}
+
+const storeKey = '@user'
 
 export const storeUser = async (user: User) => {
   try {

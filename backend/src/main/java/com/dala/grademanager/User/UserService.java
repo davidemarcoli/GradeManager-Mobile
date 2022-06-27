@@ -18,4 +18,6 @@ public interface UserService {
     User loginUser(User user) throws LoginException;
 
     User validateUserLogin(User user) throws LoginException;
+
+    User editUser(User user);
 }

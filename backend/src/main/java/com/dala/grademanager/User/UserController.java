@@ -56,4 +56,10 @@ public class UserController {
         return userService.validateUserLogin(user);
     }
 
+    @PutMapping("/edit")
+    public User editUser(@RequestBody User user) {
+        System.out.println("Got PP change request with payload of " + user.toString());
+        return userService.editUser(user);
+    }
+
 }
