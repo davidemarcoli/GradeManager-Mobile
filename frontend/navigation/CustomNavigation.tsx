@@ -17,6 +17,7 @@ import RegisterScreen from "../components/screens/RegisterScreen";
 import ProfileScreen from "../components/screens/ProfileScreen";
 import { doesUserExist } from "../services/UserService";
 import GradesOverviewScreen from "../components/screens/GradesOverviewScreen";
+import AnalyticsScreen from "../components/screens/AnalyticsScreen";
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
@@ -39,7 +40,7 @@ export default function CustomNavigation({ theme }: ThemeProps) {
     {
       iconName: "chart-bell-curve-cumulative",
       text: "Analytics",
-      route: "Settings",
+      route: "Analytics",
     },
     { iconName: "face-man-outline", text: "Profile", route: "Profile" },
   ];
@@ -87,6 +88,7 @@ export default function CustomNavigation({ theme }: ThemeProps) {
             <Stack.Screen name="Goals" component={GoalsScreen} />
             <Stack.Screen name="GradesScreen" component={GradesScreen} />
             <Stack.Screen name="Grades" component={GradesOverviewScreen} />
+            <Stack.Screen name="Analytics" component={AnalyticsScreen} />
             <Stack.Screen name="Profile">
               {(props) => (
                 <ProfileScreen
