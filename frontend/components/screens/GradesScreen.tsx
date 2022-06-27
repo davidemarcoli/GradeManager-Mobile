@@ -9,6 +9,8 @@ import {Grade} from "../../models/Grade";
 import {getUser} from "../../services/UserService";
 import * as yup from "yup";
 import CustomSnackbar from "../atoms/CustomSnackbar";
+import {setLocale} from "yup";
+import {useNavigation} from "@react-navigation/native";
 
 const schema = yup.object().shape({
     grade: yup.number().required().min(1).max(6),
@@ -26,6 +28,7 @@ export default function GradesScreen() {
     });
 
     const theme = useTheme();
+    const navigation = useNavigation();
 
     const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
     const [error, setError] = React.useState("");
@@ -34,7 +37,7 @@ export default function GradesScreen() {
 
     useEffect(() => {
         if (error) {
-            onToggleSnackBar();
+            setIsSnackbarVisible(true);
         }
     }, [error]);
 
@@ -57,10 +60,20 @@ export default function GradesScreen() {
                 if (e instanceof Error) console.log(e);
             }
             console.log("Grade added");
+            //navigation.navigate("GradeList")
         })
             .catch((error: any) => {
+
                 console.log(JSON.stringify(error))
-                setError(error.errors[0])
+
+                if (error.errors[0].startsWith("grade must be a `number` type")) {
+                    setError("grade has to be a number")
+                    setIsSnackbarVisible(true)
+                } else {
+                    setError(error.errors[0])
+                    setIsSnackbarVisible(true)
+                }
+
             })
 
     }
