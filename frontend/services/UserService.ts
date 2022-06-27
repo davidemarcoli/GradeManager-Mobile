@@ -38,7 +38,7 @@ const storeKey = "@user";
 
 export const storeUser = async (user: User) => {
   try {
-    console.log("storeUser", user);
+    // console.log("storeUser", user);
     await AsyncStorage.setItem(storeKey, JSON.stringify(user));
   } catch (e) {
     // saving error
@@ -48,7 +48,7 @@ export const storeUser = async (user: User) => {
 export const getUser = async (): Promise<User | undefined> => {
   try {
     const user = JSON.parse(<string>await AsyncStorage.getItem(storeKey));
-    console.log("getUser", user);
+    // console.log("getUser", user);
     if (user !== null) {
       return user;
     }
