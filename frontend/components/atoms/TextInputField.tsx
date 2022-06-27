@@ -27,19 +27,14 @@ type TextInputFieldProps = {
     size?: IconSizeProps["iconSizes"];
     color?: string;
     padding?: number;
+    marginTop?: string;
   };
   icon?: {
     name?: string;
     size?: IconSizeProps["iconSizes"];
     color?: string;
     padding?: number;
-    onChangeText?: (text: string) => void;
-    icon?: {
-      name?: string;
-      size?: IconSizeProps["iconSizes"];
-      color?: string;
-      padding?: number;
-    };
+    marginTop?: string;
   };
 };
 
@@ -60,10 +55,6 @@ export default function TextInputField({
   const theme = useTheme();
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
-  const [data, setData] = React.useState({
-    username: "",
-    password: "",
-  });
 
   return (
     <>
@@ -72,7 +63,7 @@ export default function TextInputField({
           <View style={createStyles(marginTop, width, padding).field}>
             {mainIcon ? (
               <MaterialCommunityIcons
-                style={iconStyle.icon}
+                style={iconStyle(mainIcon.marginTop).icon}
                 name={mainIcon.name}
                 size={22}
                 color={"grey"}
@@ -110,7 +101,7 @@ export default function TextInputField({
           <View style={createStyles(marginTop, width, padding).field}>
             {mainIcon ? (
               <MaterialCommunityIcons
-                style={iconStyle.icon}
+                style={iconStyle(mainIcon.marginTop).icon}
                 name={mainIcon.name}
                 size={22}
                 color={"grey"}
@@ -164,9 +155,9 @@ const subtextStyle = StyleSheet.create({
   },
 });
 
-const iconStyle = StyleSheet.create({
+const iconStyle = (marginTop?: string) => StyleSheet.create({
   icon: {
-    marginTop: "14%",
+    marginTop: marginTop || "14%",
     left: "5%",
     marginRight: "-7.5%",
     zIndex: 1,

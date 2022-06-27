@@ -1,12 +1,12 @@
 export class User {
-  id: string | undefined;
+  id: string;
   email: string;
   password: string | undefined;
   name: string | undefined;
   profilePictureUrl: string | undefined;
 
   constructor(
-    id: string | undefined,
+    id: string,
     email: string,
     password: string | undefined,
     name: string | undefined,

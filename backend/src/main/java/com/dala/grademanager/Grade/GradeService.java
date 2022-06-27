@@ -10,4 +10,10 @@ public interface GradeService {
     Grade getGradeByID(String id);
 
     Grade saveGrade(Grade grade);
+
+    List<Grade> getGradesByUserID(String userId);
+
+    void deleteGradeByID(String gradeId);
+
+    Grade updateGradeByID(String gradeId, Grade newGrade);
 }
