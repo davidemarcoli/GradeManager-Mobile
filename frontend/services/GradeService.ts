@@ -1,4 +1,4 @@
-import { Grade } from "../models/Grades";
+import { Grade } from "../models/Grade";
 import {getUser} from "./UserService";
 
 export function saveGrade(grade: Grade) {
