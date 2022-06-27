@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {View, Text, StyleSheet, Modal, ScrollView, Keyboard} from "react-native";
 import {DataTable, Title, useTheme} from "react-native-paper";
-import {Grade} from "../../models/Grades";
+import {Grade} from "../../models/Grade";
 import {
     deleteGradeByID,
     getGradesByUserID,
@@ -12,7 +12,6 @@ import TextInputField from "../atoms/TextInputField";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
 import {User} from "../../models/User";
 import {getUser} from "../../services/UserService";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 export default function GradesOverviewScreen() {
     const theme = useTheme();
@@ -29,13 +28,13 @@ export default function GradesOverviewScreen() {
     });
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener(
+        Keyboard.addListener(
             'keyboardDidShow',
             () => {
                 setKeyboardVisible(true); // or some other action
             }
         );
-        const keyboardDidHideListener = Keyboard.addListener(
+        Keyboard.addListener(
             'keyboardDidHide',
             () => {
                 setKeyboardVisible(false); // or some other action
