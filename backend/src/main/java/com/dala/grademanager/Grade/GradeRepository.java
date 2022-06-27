@@ -17,4 +17,7 @@ public interface GradeRepository extends JpaRepository<Grade, String> {
     List<Grade> getGradesByUserID(String userId);
 
     List<Grade> findByUser_Id(String id);
+
+    //maybe need to declare function below:
+    //void deleteGradeById(String gradeId);
 }

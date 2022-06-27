@@ -36,7 +36,6 @@ export default function IconButton({
   icon,
   text,
   backgroundColor = "white",
-  borderColor = "",
   borderRadius = 0,
   border,
   sameRow = false,

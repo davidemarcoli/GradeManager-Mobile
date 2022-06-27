@@ -12,4 +12,8 @@ public interface GradeService {
     Grade saveGrade(Grade grade);
 
     List<Grade> getGradesByUserID(String userId);
+
+    void deleteGradeByID(String gradeId);
+
+    Grade updateGradeByID(String gradeId, Grade newGrade);
 }

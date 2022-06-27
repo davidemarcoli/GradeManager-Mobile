@@ -16,6 +16,17 @@ export function saveGrade(grade: Grade) {
   });
 }
 
+export function updateGradeByID(gradeId: string, newGrade: Grade) {
+  return fetch(`http://10.0.2.2:8080/api/grades/update/${gradeId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newGrade),
+  });
+}
+
 export function getGradeByID(gradeId: string) {
   return fetch(`http://10.0.2.2:8080/api/grades/${gradeId}`, {
     method: "GET",
@@ -40,7 +51,15 @@ export const getGradesByUserID = async () => {
   }
 };
 
-export function deleteGradeByID() {}
+export function deleteGradeByID(gradeId: string) {
+  return fetch(`http://10.0.2.2:8080/api/grades/delete/${gradeId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+}
 
 /*
 export function getGradesByUserID() {

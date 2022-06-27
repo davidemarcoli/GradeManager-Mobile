@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Modal } from "react-native";
 import { DataTable, Title, useTheme } from "react-native-paper";
 import { Grade } from "../../models/Grades";
-import { getGradeByID, getGradesByUserID } from "../../services/GradeService";
+import {
+  deleteGradeByID,
+  getGradesByUserID,
+  updateGradeByID,
+} from "../../services/GradeService";
 import IconButton from "../atoms/IconButton";
 import TextInputField from "../atoms/TextInputField";
 import { useNavigation } from "@react-navigation/native";
+import { User } from "../../models/User";
+import { getUser } from "../../services/UserService";
 
 export default function GradesOverviewScreen() {
   const theme = useTheme();
@@ -13,6 +19,7 @@ export default function GradesOverviewScreen() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = React.useState({
+    id: "",
     grade: "",
     gradename: "",
     subject: "",
@@ -27,6 +34,17 @@ export default function GradesOverviewScreen() {
       });
     });
   }, []);
+
+  async function createUpdatedGrade(): Promise<Grade> {
+    return new Grade(
+      data.id,
+      data.gradename,
+      Number(data.grade),
+      data.subject,
+      data.school,
+      await getUser()
+    );
+  }
 
   return (
     <>
@@ -151,39 +169,47 @@ export default function GradesOverviewScreen() {
                 <View style={styles.modalBnt}>
                   <IconButton
                     onPress={() => {
-                      setModalVisible(!modalVisible);
+                      createUpdatedGrade().then((grade) => {
+                        updateGradeByID(data.id, grade);
+                        setModalVisible(!modalVisible);
+                      });
                     }}
                     icon={{
                       name: "check-circle-outline",
-                      size: "medium",
+                      size: "large",
                       iconType: "MaterialIcons",
                       color: "white",
                     }}
-                    backgroundColor="orange"
+                    backgroundColor={theme.colors.accent}
                     border={{
                       width: 1,
-                      color: "orange",
+                      color: theme.colors.accent,
                     }}
-                    sameRow={false}
-                    height={50}
+                    sameRow={true}
+                    height={40}
+                    width={6}
+                    borderRadius={10}
                   ></IconButton>
                   <IconButton
                     onPress={() => {
+                      deleteGradeByID(data.id);
                       setModalVisible(!modalVisible);
                     }}
                     icon={{
                       name: "delete-outline",
-                      size: "medium",
+                      size: "large",
                       iconType: "MaterialIcons",
-                      color: "orange",
+                      color: theme.colors.accent,
                     }}
                     backgroundColor="white"
                     border={{
                       width: 1,
-                      color: "orange",
+                      color: theme.colors.accent,
                     }}
-                    sameRow={false}
-                    height={50}
+                    sameRow={true}
+                    height={40}
+                    width={60}
+                    borderRadius={10}
                   ></IconButton>
                 </View>
               </View>
@@ -207,6 +233,7 @@ export default function GradesOverviewScreen() {
                   setModalVisible(!modalVisible);
                   setData({
                     ...data,
+                    id: grade.id!,
                     grade: grade.grade.toString(),
                     gradename: grade.name,
                     subject: grade.subject,
@@ -278,11 +305,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalBnt: {
+    paddingTop: 10,
     //horizontally center two buttons
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
-    height: "100%",
   },
   backBtn: {
     position: "absolute",

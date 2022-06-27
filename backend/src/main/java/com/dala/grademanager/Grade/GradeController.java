@@ -34,4 +34,16 @@ public class GradeController {
         System.out.println("Got add grade request with payload of " + grade.toString());
         return gradeService.saveGrade(grade);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteGradeByID(@PathVariable("id") String gradeId) {
+        System.out.println("Got a grade delete request.");
+        gradeService.deleteGradeByID(gradeId);
+    }
+
+    @PutMapping("/update/{id}")
+    public Grade updateGradeByID(@PathVariable("id") String gradeId, @RequestBody Grade updatedGrade) {
+        System.out.println("Got a grade update request");
+        return gradeService.updateGradeByID(gradeId, updatedGrade);
+    }
 }
