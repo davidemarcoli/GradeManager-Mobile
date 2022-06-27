@@ -1,20 +1,14 @@
 import React from "react";
-import {ImageComponent, View, Image} from "react-native";
+import { View } from "react-native";
 import TextField from "../atoms/TextField";
-import CustomCard from "../atoms/CustomCard";
-import {Divider, useTheme} from "react-native-paper";
-import IconButton from "../atoms/IconButton";
-import ProfileCard from "../organisms/ProfileCard";
-import {getUser} from "../../services/UserService";
+import { useTheme } from "react-native-paper";
 
 export default function ExamsScreen() {
+  const theme = useTheme();
 
-    const theme = useTheme();
-
-    return (
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-            <TextField text={"Exams"}></TextField>
-        </View>
-    )
-
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <TextField text={"Exams"}></TextField>
+    </View>
+  );
 }

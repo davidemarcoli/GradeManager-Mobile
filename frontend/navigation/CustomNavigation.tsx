@@ -85,6 +85,7 @@ export default function CustomNavigation({ theme }: ThemeProps) {
             </Stack.Screen>
             <Stack.Screen name="Exams" component={ExamsScreen} />
             <Stack.Screen name="Goals" component={GoalsScreen} />
+            <Stack.Screen name="GradesScreen" component={GradesScreen} />
             <Stack.Screen name="Grades" component={GradesOverviewScreen} />
             <Stack.Screen name="Profile">
               {(props) => (
