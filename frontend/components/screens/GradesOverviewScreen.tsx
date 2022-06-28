@@ -7,6 +7,7 @@ import IconButton from "../atoms/IconButton";
 import TextInputField from "../atoms/TextInputField";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
 import {getUser} from "../../services/UserService";
+import CustomSnackbar from "../atoms/CustomSnackbar";
 
 LogBox.ignoreLogs([
     "Warning: Can't perform a React state update on an unmounted component."
@@ -25,6 +26,15 @@ export default function GradesOverviewScreen() {
         subject: "",
         school: "",
     });
+    const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
+    const [message, setMessage] = React.useState("");
+    const onDismissSnackBar = () => setIsSnackbarVisible(false);
+
+    useEffect(() => {
+        if (message) {
+            setIsSnackbarVisible(true);
+        }
+    }, [message]);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     useEffect(() => {
         Keyboard.addListener(
@@ -184,6 +194,7 @@ export default function GradesOverviewScreen() {
                                         onPress={() => {
                                             createUpdatedGrade().then((grade) => {
                                                 updateGradeByID(data.id, grade).then(() => {
+                                                    setMessage("Grade successfully edited!")
                                                     fetchGrades()
                                                     setModalVisible(!modalVisible);
                                                 });
@@ -209,6 +220,7 @@ export default function GradesOverviewScreen() {
                                     <IconButton
                                         onPress={() => {
                                             deleteGradeByID(data.id).then(() => {
+                                                setMessage("Grade successfully deleted!")
                                                 fetchGrades()
                                                 setModalVisible(!modalVisible);
                                             });
@@ -291,6 +303,10 @@ export default function GradesOverviewScreen() {
                         backgroundColor={theme.colors.accent}
                     ></IconButton>
                 </View>
+
+                {isSnackbarVisible && (
+                    <CustomSnackbar message={message} duration={3000} onDismiss={onDismissSnackBar}/>
+                )}
             </View>
         </>
     );

@@ -28,15 +28,14 @@ export default function GradesScreen() {
     const navigation = useNavigation();
 
     const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
-    const [error, setError] = React.useState("");
-    const onToggleSnackBar = () => setIsSnackbarVisible(!isSnackbarVisible);
+    const [message, setMessage] = React.useState("");
     const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
     useEffect(() => {
-        if (error) {
+        if (message) {
             setIsSnackbarVisible(true);
         }
-    }, [error]);
+    }, [message]);
 
     async function addGrade() {
         console.log(data);
@@ -51,7 +50,9 @@ export default function GradesScreen() {
                     data.school,
                     undefined
                 )
-            ).then(() => navigation.navigate("Grades"))
+            ).then(() => {
+                navigation.navigate("Grades")
+            })
                 .catch((error: unknown) => {
                     if (error instanceof Error) console.log(error);
                 })
@@ -63,10 +64,10 @@ export default function GradesScreen() {
                 console.log(JSON.stringify(error))
 
                 if (error.errors[0].startsWith("grade must be a `number` type")) {
-                    setError("grade has to be a number")
+                    setMessage("grade has to be a number")
                     setIsSnackbarVisible(true)
                 } else {
-                    setError(error.errors[0])
+                    setMessage(error.errors[0])
                     setIsSnackbarVisible(true)
                 }
 
@@ -176,7 +177,7 @@ export default function GradesScreen() {
                     backgroundColor={theme.colors.accent}
                 ></IconButton>
                 {isSnackbarVisible && (
-                    <CustomSnackbar message={error} onDismiss={onDismissSnackBar}/>
+                    <CustomSnackbar message={message} duration={3000} onDismiss={onDismissSnackBar}/>
                 )}
             </View>
         </>
