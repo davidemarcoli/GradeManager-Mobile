@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/edit")
-    @Operation(description = "Change the Profile Picture of a user")
+    @Operation(description = "Update an existing User")
     public User editUser(@RequestBody User user) {
         System.out.println("Got PP change request with payload of " + user.toString());
         return userService.editUser(user);
