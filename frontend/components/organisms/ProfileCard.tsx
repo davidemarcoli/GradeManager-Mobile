@@ -140,7 +140,7 @@ export default function ProfileCard() {
           <IconButton
             onPress={() => {}}
             text={{
-              text: gradeCount + " Exams",
+              text: (gradeCount || 0) + " Exams",
               color: theme.colors.text,
               size: 12,
               opacity: 0.7,
