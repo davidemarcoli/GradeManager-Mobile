@@ -51,6 +51,20 @@ export const getGradesByUserID = async () => {
   }
 };
 
+export const getGradeCountByUserID = async () => {
+  const user = await getUser();
+  if (user) {
+    const userId = user.id;
+    return fetch(`http://10.0.2.2:8080/api/grades/count/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+  }
+};
+
 export function deleteGradeByID(gradeId: string) {
   return fetch(`http://10.0.2.2:8080/api/grades/delete/${gradeId}`, {
     method: "DELETE",

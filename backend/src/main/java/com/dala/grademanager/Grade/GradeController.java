@@ -2,6 +2,7 @@ package com.dala.grademanager.Grade;
 
 import com.dala.grademanager.exceptions.LoginException;
 import com.dala.grademanager.jpa.Grade;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +16,21 @@ public class GradeController {
     private final GradeService gradeService;
 
     @GetMapping("/")
+    @Operation(description = "Get all grades that are in the database. (Only for testing or stats purposes)")
     public List<Grade> getAllGrades() {
         return gradeService.getAllGrades();
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Get Grade by ID")
     public Grade getGradeByID(@PathVariable("id") String id) {
         return gradeService.getGradeByID(id);
+    }
+
+    @GetMapping("/count/{id}")
+    @Operation(description = "Get count of grades by user id")
+    public int getGradeCountByUserID(@PathVariable("id") String userId) {
+        return gradeService.getGradesByUserID(userId).size();
     }
 
     @GetMapping("/user/{id}")

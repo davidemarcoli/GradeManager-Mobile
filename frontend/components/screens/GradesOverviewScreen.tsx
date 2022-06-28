@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, StyleSheet, Modal, ScrollView, Keyboard} from "react-native";
+import {View, Text, StyleSheet, Modal, ScrollView, Keyboard, LogBox} from "react-native";
 import {DataTable, Title, useTheme} from "react-native-paper";
 import {Grade} from "../../models/Grade";
 import {
@@ -10,8 +10,11 @@ import {
 import IconButton from "../atoms/IconButton";
 import TextInputField from "../atoms/TextInputField";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
-import {User} from "../../models/User";
 import {getUser} from "../../services/UserService";
+
+LogBox.ignoreLogs([
+    "Warning: Can't perform a React state update on an unmounted component."
+])
 
 export default function GradesOverviewScreen() {
     const theme = useTheme();
