@@ -1,15 +1,13 @@
-import {View, StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 import React, {useEffect} from "react";
-import {Avatar, Button, Card, Title, useTheme} from "react-native-paper";
+import {useTheme} from "react-native-paper";
 import TextInputField from "../atoms/TextInputField";
 import IconButton from "../atoms/IconButton";
 import {saveGrade} from "../../services/GradeService";
 import {Grade} from "../../models/Grade";
-import {getUser} from "../../services/UserService";
 import * as yup from "yup";
 import {useNavigation} from "@react-navigation/native";
 import CustomSnackbar from "../atoms/CustomSnackbar";
-import {setLocale} from "yup";
 
 const schema = yup.object().shape({
     grade: yup.number().required().min(1).max(6),
@@ -44,20 +42,19 @@ export default function GradesScreen() {
         console.log(data);
 
         schema.validate(data).then(() => {
-            try {
-                saveGrade(
-                    new Grade(
-                        undefined,
-                        data.gradename,
-                        Number(data.grade),
-                        data.subject,
-                        data.school,
-                        undefined
-                    )
-                );
-            } catch (e: unknown) {
-                if (e instanceof Error) console.log(e);
-            }
+            saveGrade(
+                new Grade(
+                    undefined,
+                    data.gradename,
+                    Number(data.grade),
+                    data.subject,
+                    data.school,
+                    undefined
+                )
+            ).then(() => navigation.navigate("Grades"))
+                .catch((error: unknown) => {
+                    if (error instanceof Error) console.log(error);
+                })
             console.log("Grade added");
             //navigation.navigate("GradeList")
         })

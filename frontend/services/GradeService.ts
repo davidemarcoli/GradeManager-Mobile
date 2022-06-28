@@ -2,7 +2,7 @@ import { Grade } from "../models/Grade";
 import { getUser } from "./UserService";
 
 export function saveGrade(grade: Grade) {
-  getUser().then((value) => {
+  return getUser().then((value) => {
     grade.user = value;
 
     return fetch("http://10.0.2.2:8080/api/grades/persistence/addgrade", {
