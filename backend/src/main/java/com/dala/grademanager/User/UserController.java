@@ -2,6 +2,7 @@ package com.dala.grademanager.User;
 
 import com.dala.grademanager.exceptions.LoginException;
 import com.dala.grademanager.jpa.User;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,21 +22,25 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/")
+    @Operation(description = "Get all Users (for testing purposes)")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Get User by ID")
     public User getUserById(@PathVariable("id") String id) {
         return userService.getUserById(id);
     }
 
     @GetMapping("/email/{email}")
+    @Operation(description = "Get User by Email")
     public User getUserByEmail(@PathVariable("email") String email) {
         return userService.getUserByEmail(email);
     }
 
     @PostMapping("/security/register")
+    @Operation(description = "Register a new User")
     public User saveUser(@RequestBody User user) throws LoginException {
 
         System.out.println("Got register request with payload of " + user.toString());
@@ -44,6 +49,7 @@ public class UserController {
     }
 
     @PostMapping("/security/login")
+    @Operation(description = "Login with an existing User")
     public User loginUser(@RequestBody User user) throws LoginException {
 
         System.out.println("Got login request with payload of " + user.toString());
@@ -52,11 +58,13 @@ public class UserController {
     }
 
     @PostMapping("/security/plainLogin")
+    @Operation(description = "Login with an existing User")
     public User validateUserLogin(@RequestBody User user) throws LoginException {
         return userService.validateUserLogin(user);
     }
 
     @PutMapping("/edit")
+    @Operation(description = "Change the Profile Picture of a user")
     public User editUser(@RequestBody User user) {
         System.out.println("Got PP change request with payload of " + user.toString());
         return userService.editUser(user);

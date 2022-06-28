@@ -28,29 +28,33 @@ public class GradeController {
     }
 
     @GetMapping("/count/{id}")
-    @Operation(description = "Get count of grades by user id")
+    @Operation(description = "Get Count of Grades by User ID")
     public int getGradeCountByUserID(@PathVariable("id") String userId) {
         return gradeService.getGradesByUserID(userId).size();
     }
 
     @GetMapping("/user/{id}")
+    @Operation(description = "Get Grades by User ID")
     public List<Grade> getGradesByUserID(@PathVariable("id") String userId) {
         return gradeService.getGradesByUserID(userId);
     }
 
     @PostMapping("/persistence/addgrade")
-    public Grade saveGrade(@RequestBody Grade grade) throws LoginException {
+    @Operation(description = "Persist a new Grade")
+    public Grade saveGrade(@RequestBody Grade grade) {
         System.out.println("Got add grade request with payload of " + grade.toString());
         return gradeService.saveGrade(grade);
     }
 
     @DeleteMapping("/delete/{id}")
+    @Operation(description = "Delete an existing Grade")
     public void deleteGradeByID(@PathVariable("id") String gradeId) {
         System.out.println("Got a grade delete request.");
         gradeService.deleteGradeByID(gradeId);
     }
 
     @PutMapping("/update/{id}")
+    @Operation(description = "Update an existing Grade")
     public Grade updateGradeByID(@PathVariable("id") String gradeId, @RequestBody Grade updatedGrade) {
         System.out.println("Got a grade update request");
         return gradeService.updateGradeByID(gradeId, updatedGrade);
