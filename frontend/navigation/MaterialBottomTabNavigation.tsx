@@ -4,7 +4,6 @@ import {createMaterialBottomTabNavigator} from "@react-navigation/material-botto
 import {MaterialIcon} from "../components/atoms/MaterialIcon";
 import useCachedResources from "../hooks/useCachedResources";
 import {useColorScheme, View} from "react-native";
-import {NavigationContainer} from "@react-navigation/native";
 import React from "react";
 
 const Stack = createMaterialBottomTabNavigator();

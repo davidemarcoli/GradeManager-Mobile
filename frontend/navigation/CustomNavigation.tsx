@@ -1,13 +1,8 @@
 import LoginScreen from "../components/screens/LoginScreen";
 import useCachedResources from "../hooks/useCachedResources";
-import { LogBox, useColorScheme, View } from "react-native";
-import {
-  NavigationContainer,
-  useIsFocused,
-  useNavigation,
-} from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {LogBox, View} from "react-native";
+import React, {useEffect, useState} from "react";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Navbar from "../components/organisms/Navbar";
 import ExamsScreen from "../components/screens/ExamsScreen";
 import GoalsScreen from "../components/screens/GoalsScreen";
@@ -16,40 +11,40 @@ import SettingsScreen from "../components/screens/SettingsScreen";
 import RegisterScreen from "../components/screens/RegisterScreen";
 import ProfileScreen from "../components/screens/ProfileScreen";
 import EditProfilePictureScreen from "../components/screens/EditProfilePictureScreen";
-import { doesUserExist } from "../services/UserService";
+import {doesUserExist} from "../services/UserService";
 import GradesOverviewScreen from "../components/screens/GradesOverviewScreen";
 import AnalyticsScreen from "../components/screens/AnalyticsScreen";
 
 LogBox.ignoreLogs([
-  "Non-serializable values were found in the navigation state",
+    "Non-serializable values were found in the navigation state",
 ]);
 
 const Stack = createNativeStackNavigator();
 
 type ThemeProps = {
-  theme: any;
+    theme: any;
 };
 
-export default function CustomNavigation({ theme }: ThemeProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
-  const isLoadingComplete = useCachedResources();
+export default function CustomNavigation({theme}: ThemeProps) {
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+    const isLoadingComplete = useCachedResources();
 
-  const navbarElements: { iconName: string; text: string; route: string }[] = [
-    { iconName: "calendar-month-outline", text: "Exams", route: "Exams" },
-    { iconName: "flag-outline", text: "Goals", route: "Goals" },
-    { iconName: "playlist-plus", text: "Grades", route: "Grades" },
-    {
-      iconName: "chart-bell-curve-cumulative",
-      text: "Analytics",
-      route: "Analytics",
-    },
-    { iconName: "face-man-outline", text: "Profile", route: "Profile" },
-  ];
+    const navbarElements: { iconName: string; text: string; route: string }[] = [
+        {iconName: "calendar-month-outline", text: "Exams", route: "Exams"},
+        {iconName: "flag-outline", text: "Goals", route: "Goals"},
+        {iconName: "playlist-plus", text: "Grades", route: "Grades"},
+        {
+            iconName: "chart-bell-curve-cumulative",
+            text: "Analytics",
+            route: "Analytics",
+        },
+        {iconName: "face-man-outline", text: "Profile", route: "Profile"},
+    ];
 
-  useEffect(() => {
-    //console.log("Does User exist? ", doesUserExist())
-    setIsLoggedIn(doesUserExist());
-  }, []);
+    useEffect(() => {
+        //console.log("Does User exist? ", doesUserExist())
+        setIsLoggedIn(doesUserExist());
+    }, []);
 
     useEffect(() => {
         //console.log("Does User exist? ", doesUserExist())
@@ -82,9 +77,9 @@ export default function CustomNavigation({ theme }: ThemeProps) {
                         </Stack.Screen>
                         <Stack.Screen name="Exams" component={ExamsScreen}/>
                         <Stack.Screen name="Goals" component={GoalsScreen}/>
-                        <Stack.Screen name="GradesScreen" component={GradesScreen} />
-                        <Stack.Screen name="Grades" component={GradesOverviewScreen} />
-                        <Stack.Screen name="Analytics" component={AnalyticsScreen} />
+                        <Stack.Screen name="GradesScreen" component={GradesScreen}/>
+                        <Stack.Screen name="Grades" component={GradesOverviewScreen}/>
+                        <Stack.Screen name="Analytics" component={AnalyticsScreen}/>
                         <Stack.Screen name="Profile">
                             {props => <ProfileScreen {...props} setIsLoggedIn={(value) => {
                                 console.log("Set LoggedIn to " + value)

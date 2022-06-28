@@ -1,5 +1,4 @@
-import {Switch, Text, useTheme} from "react-native-paper";
-import {PreferencesContext} from "../../theme/PreferencesContext";
+import {useTheme} from "react-native-paper";
 import React, {useEffect, useState} from "react";
 import {Image, LogBox, StyleSheet, View} from "react-native";
 import IconButton from "../atoms/IconButton";
@@ -105,7 +104,7 @@ export default function EditProfilePictureScreen({currentProfilePictureUrl}: Edi
                         onPress={() => {
                             changeProfilePicture();
                         }}
-                        text={{ text: "Change Profile Picture", weight: "bold" }}
+                        text={{text: "Change Profile Picture", weight: "bold"}}
                         backgroundColor={theme.colors.accent}
                     ></IconButton>
 

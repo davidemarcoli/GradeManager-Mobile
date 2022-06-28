@@ -15,8 +15,6 @@ import {
 import merge from 'deepmerge';
 import { PreferencesContext } from "./theme/PreferencesContext";
 import {getTheme, storeTheme} from "./services/ThemeStorageService";
-import {getUser, login, storeUser} from "./services/UserService";
-import {User} from "./models/User";
 
 const navigationNumber = 2;
 

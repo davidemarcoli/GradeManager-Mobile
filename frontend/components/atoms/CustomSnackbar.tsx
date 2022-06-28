@@ -1,5 +1,5 @@
 import React from "react";
-import { Snackbar, Text } from "react-native-paper";
+import {Snackbar} from "react-native-paper";
 import {View} from "react-native";
 
 type SnackbarProps = {
@@ -10,7 +10,11 @@ type SnackbarProps = {
     onPress?: () => void;
 }
 
-export default function CustomSnackbar({message, visible=true, duration=5000, onDismiss=(() => {}), onPress=() => {}}: SnackbarProps) {
+export default function CustomSnackbar({
+                                           message, visible = true, duration = 5000, onDismiss = (() => {
+    }), onPress = () => {
+    }
+                                       }: SnackbarProps) {
 
     if (!message) {
         return <View></View>;
@@ -26,7 +30,7 @@ export default function CustomSnackbar({message, visible=true, duration=5000, on
                 onPress: onPress,
             }}
             duration={duration} children={
-           message
+            message
         }/>
     )
 }

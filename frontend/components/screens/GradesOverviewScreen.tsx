@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, StyleSheet, Modal, ScrollView, Keyboard, LogBox} from "react-native";
+import {Keyboard, LogBox, Modal, StyleSheet, View} from "react-native";
 import {DataTable, Title, useTheme} from "react-native-paper";
 import {Grade} from "../../models/Grade";
-import {
-    deleteGradeByID,
-    getGradesByUserID,
-    updateGradeByID,
-} from "../../services/GradeService";
+import {deleteGradeByID, getGradesByUserID, updateGradeByID,} from "../../services/GradeService";
 import IconButton from "../atoms/IconButton";
 import TextInputField from "../atoms/TextInputField";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
@@ -90,7 +86,8 @@ export default function GradesOverviewScreen() {
                        }}
                 >
                     <View style={[styles.centeredView, {marginTop: -80}]}>
-                        <View style={[styles.modalView, {backgroundColor: theme.colors.navbarBackground}, getModalHeight(isKeyboardVisible).style]}>
+                        <View
+                            style={[styles.modalView, {backgroundColor: theme.colors.navbarBackground}, getModalHeight(isKeyboardVisible).style]}>
                             <Title
                                 style={{
                                     color: theme.colors.text,

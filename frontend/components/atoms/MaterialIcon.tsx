@@ -22,14 +22,21 @@ export const IconSizes = {
     extraLarge: 27,
 };
 
-export function MaterialIcon({size = "medium", name, color = "black", iconType="MaterialCommunityIcons", opacity=1}: IconProps) {
+export function MaterialIcon({
+                                 size = "medium",
+                                 name,
+                                 color = "black",
+                                 iconType = "MaterialCommunityIcons",
+                                 opacity = 1
+                             }: IconProps) {
 
     switch (iconType) {
         case "MaterialCommunityIcons":
-            return (<MaterialCommunityIcons name={name} size={IconSizes[size]} color={color} style={{opacity: opacity}}/>)
+            return (
+                <MaterialCommunityIcons name={name} size={IconSizes[size]} color={color} style={{opacity: opacity}}/>)
         case "MaterialIcons":
             return (<MaterialIcons name={name} size={IconSizes[size]} color={color} style={{opacity: opacity}}/>)
     }
 
 
-};
+}
