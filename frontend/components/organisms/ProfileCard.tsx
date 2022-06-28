@@ -9,6 +9,7 @@ import {User} from "../../models/User";
 import {getUser} from "../../services/UserService";
 import {NavigationActions} from "react-navigation";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
+import {getGradeCountByUserID, getGradesByUserID} from "../../services/GradeService";
 
 type ProfileCardProps = {
   user: User;
@@ -19,15 +20,18 @@ export default function ProfileCard() {
   const navigation = useNavigation();
 
   const [user, setUser] = useState<User>();
+  const [gradeCount, setGradeCount] = useState<number>()
 
     const isFocused = useIsFocused()
 
     useEffect(() => {
         updateUser()
+        updateGradeCount()
     } , [isFocused])
 
     useEffect(() => {
         updateUser()
+        updateGradeCount()
     }, [])
 
     function updateUser() {
@@ -35,6 +39,17 @@ export default function ProfileCard() {
             if (value) {
                 setUser(value)
             }
+        })
+    }
+
+    function updateGradeCount() {
+        getGradeCountByUserID().then(response => {
+            response!.json().then(value => {
+                console.log(value)
+                if (value) {
+                    setGradeCount(Number(value))
+                }
+            })
         })
     }
 
@@ -125,7 +140,7 @@ export default function ProfileCard() {
           <IconButton
             onPress={() => {}}
             text={{
-              text: "XX Exams",
+              text: gradeCount + " Exams",
               color: theme.colors.text,
               size: 12,
               opacity: 0.7,

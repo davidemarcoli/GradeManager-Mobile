@@ -90,7 +90,7 @@ export default function EditProfilePictureScreen({currentProfilePictureUrl}: Edi
                         }
                         marginTop={20}
                         mainIcon={{
-                            name: "file-document-outline",
+                            name: "image-search",
                             size: "medium",
                             color: theme.colors.text,
                         }}
